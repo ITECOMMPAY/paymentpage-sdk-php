@@ -1,32 +1,78 @@
-# Hello, world!
+# EcommPay PHP SDK
 
-Here some stuff for fast integration with ecommpay processing service. It's pre alpha build :) Some examples of usage:
+This is a set of libraries in the PHP language to ease integration of your service with the EcommPay Payment Page.
 
-# Setting config:
+The following functionality is implemented:
 
-- It's your local file, you have to move config/config_example.php to config/config.php and set your own secret key
+* Payment Page openning 
+* Notifications handling
 
-# Example
+Please note that for correct SDK operating you must have at least PHP 5.0 (or higher).  
 
-require 'init.php'; //include SDK
+## Payment flow
 
+![Payment flow](flow.png)
+
+## Installation
+
+* Clone / download this SDK from the repository
+* Configure the SDK, e.g. as follows:
+  1. Open `/config/config.php`
+  2. Set `SECRET_KEY` to the value provided by EcommPay
+* Load it: 
+    ```php
+    require ‘pmx.php’; // include SDK libraries
+    use Gate\Gate;     // use Gate namespace
+    ```
+
+## Payment Page openning
+
+You'll need to autoload this code in order to get signed url for user's redirect on the Ecommpay Payment Page:
+
+```php
+require ‘pmx.php’;
 use Gate\Gate;
-
 $gate = new Gate();
+$url = $gate->getPurchasePaymentPageUrl(
+    string $project_id,
+    string $payment_id,
+    integer $payment_amount,
+    string $payment_currency = ‘RUB’,
+    string $customer_id = ‘’,
+    string $payment_description = ‘’,
+    string $language_code = ‘’
+);
+``` 
 
-//Getting purchase payment page:
+`$url` here is the signed url.
 
-$gate->getPurchasePaymentPageUrl(<project_id>, <payment_id>, <payment_amount>);
+Parameter | Required | Format | Description
+---------|---------|---------|---------
+`project_id` | yes | string | Unique id of your project in the Payment Page
+`payment_id` | yes  | string | Unique id of the payment in your system
+`payment_amount` | yes | integer | Payment amount in minor units
+`payment_currency` | no | string | Currency in ISO 4217 alpha-3
+`customer_id` | no | string | Customer id
+`language_code` | no | string | Payment page language in ISO 3166-2. Its default is determined by `region_code` parameter.
 
-//Callback handling:
+## Notifications handling
 
-$callback = $gate->handleCallback(<rawdata from gate>);
+You'll need to autoload this code in order to handle notifications:
 
-$callback->getPayment();
+```php
+require ‘pmx.php’;
+use Gate\Gate;
+$gate = new Gate();
+$callback = $gate→handleCallback($jsonData);
+```
 
-$callback->getPaymentStatus();
+`$jsonData` is the JSON data received from payment system;
 
-$callback->getSignature();
-
-...
-etc
+`$callback` is the Callback object describing properties received from payment system;
+`$callback` implements these methods: 
+1. `Callback::getPaymentStatus();`
+    Get payment status.
+2. `Callback::getPayment();`
+    Get all payment data.
+3. `Callback::getPaymentId();`
+    Get payment id in ypur system.
