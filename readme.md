@@ -21,7 +21,7 @@ Please note that for correct SDK operating you must have at least PHP 5.0 (or hi
   2. Set `SECRET_KEY` to the value provided by EcommPay
 * Load it: 
     ```php
-    require ‘pmx.php’; // include SDK libraries
+    require 'init.php’; // include SDK libraries
     use Gate\Gate;     // use Gate namespace
     ```
 
@@ -30,7 +30,7 @@ Please note that for correct SDK operating you must have at least PHP 5.0 (or hi
 You'll need to autoload this code in order to get signed url for user's redirect on the Ecommpay Payment Page:
 
 ```php
-require ‘pmx.php’;
+require ‘init.php’;
 use Gate\Gate;
 $gate = new Gate();
 $url = $gate->getPurchasePaymentPageUrl(
@@ -60,7 +60,7 @@ Parameter | Required | Format | Description
 You'll need to autoload this code in order to handle notifications:
 
 ```php
-require ‘pmx.php’;
+require ‘init.php’;
 use Gate\Gate;
 $gate = new Gate();
 $callback = $gate→handleCallback($jsonData);
