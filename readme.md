@@ -7,11 +7,6 @@
 This is a set of libraries in the PHP language to ease integration of your service
 with the EcommPay Payment Page.
 
-The following functionality is implemented:
-
-[x] Payment Page opening 
-[x] Notifications handling
-
 Please note that for correct SDK operating you must have at least PHP 7.0.  
 
 ## Payment flow
@@ -55,3 +50,10 @@ $callback = $gate->handleCallback($data);
     Get all payment data.
 3. `Callback::getPaymentId();`
     Get payment ID in your system.
+    
+### TODO
+
+- [x] Payment Page opening 
+- [x] Notifications handling
+- [ ] Direct Gate requests
+- [ ] PHPDoc
