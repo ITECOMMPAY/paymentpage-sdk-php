@@ -1,13 +1,18 @@
 # EcommPay PHP SDK
 
-This is a set of libraries in the PHP language to ease integration of your service with the EcommPay Payment Page.
+[![Build Status](https://travis-ci.org/zhukovra/paymentpage_sdk.svg?branch=master)](https://travis-ci.org/zhukovra/paymentpage_sdk)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/9f134244471fa4d2fe8e/test_coverage)](https://codeclimate.com/github/zhukovra/paymentpage_sdk/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/9f134244471fa4d2fe8e/maintainability)](https://codeclimate.com/github/zhukovra/paymentpage_sdk/maintainability)
+
+This is a set of libraries in the PHP language to ease integration of your service
+with the EcommPay Payment Page.
 
 The following functionality is implemented:
 
-* Payment Page openning 
-* Notifications handling
+[x] Payment Page opening 
+[x] Notifications handling
 
-Please note that for correct SDK operating you must have at least PHP 5.0 (or higher).  
+Please note that for correct SDK operating you must have at least PHP 7.0.  
 
 ## Payment flow
 
@@ -15,58 +20,32 @@ Please note that for correct SDK operating you must have at least PHP 5.0 (or hi
 
 ## Installation
 
-* Clone / download this SDK from the repository
-* Configure the SDK, e.g. as follows:
-  1. Open `/config/config.php`
-  2. Set `SECRET_KEY` to the value provided by EcommPay
-* Load it: 
-    ```php
-    require 'init.php’; // include SDK libraries
-    use Gate\Gate;     // use Gate namespace
-    ```
+Install with composer
+```bash
+composer require ecommpay/paymentpage-sdk
+```
 
-## Payment Page openning
-
-You'll need to autoload this code in order to get signed url for user's redirect on the Ecommpay Payment Page:
+### Get URL for payment
 
 ```php
-require ‘init.php’;
-use Gate\Gate;
-$gate = new Gate();
-$url = $gate->getPurchasePaymentPageUrl(
-    string $project_id,
-    string $payment_id,
-    integer $payment_amount,
-    string $payment_currency = ‘RUB’,
-    string $customer_id = ‘’,
-    string $payment_description = ‘’,
-    string $language_code = ‘’
-);
+$gate = new ecommpay\Gate('secret');
+$payment = new ecommpay\Payment(100);
+$payment->setPaymentAmount(1000)->setPaymentCurrency('RUB');
+$url = $gate->getPurchasePaymentPageUrl($payment);
 ``` 
 
-`$url` here is the signed url.
+`$url` here is the signed URL.
 
-Parameter | Required | Format | Description
----------|---------|---------|---------
-`project_id` | yes | string | Unique id of your project in the Payment Page
-`payment_id` | yes  | string | Unique id of the payment in your system
-`payment_amount` | yes | integer | Payment amount in minor units
-`payment_currency` | no | string | Currency in ISO 4217 alpha-3
-`customer_id` | no | string | Customer id
-`language_code` | no | string | Payment page language in ISO 3166-2. Its default is determined by `region_code` parameter.
-
-## Notifications handling
+### Handle callback from Ecommpay
 
 You'll need to autoload this code in order to handle notifications:
 
 ```php
-require ‘init.php’;
-use Gate\Gate;
-$gate = new Gate();
-$callback = $gate→handleCallback($jsonData);
+$gate = new ecommpay\Gate('secret');
+$callback = $gate->handleCallback($data);
 ```
 
-`$jsonData` is the JSON data received from payment system;
+`$data` is the JSON data received from payment system;
 
 `$callback` is the Callback object describing properties received from payment system;
 `$callback` implements these methods: 
@@ -75,4 +54,4 @@ $callback = $gate→handleCallback($jsonData);
 2. `Callback::getPayment();`
     Get all payment data.
 3. `Callback::getPaymentId();`
-    Get payment id in ypur system.
+    Get payment ID in your system.

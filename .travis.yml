@@ -1,0 +1,36 @@
+language: php
+
+php:
+  - 7.0
+  - 7.1
+  - 7.2
+
+matrix:
+  fast_finish: true
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+install:
+  - travis_retry composer install -n --prefer-dist
+
+before_script:
+  - |
+    if [ $TRAVIS_PHP_VERSION = '7.0' ]; then
+      curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      chmod +x ./cc-test-reporter
+      ./cc-test-reporter before-build
+    fi
+
+script:
+  - composer lint
+  - composer test
+
+after_script:
+  - |
+    if [ $TRAVIS_PHP_VERSION = '7.0' ]; then
+      ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+    fi
