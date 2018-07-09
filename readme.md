@@ -1,8 +1,8 @@
 # EcommPay PHP SDK
 
-[![Build Status](https://travis-ci.org/zhukovra/paymentpage_sdk.svg?branch=master)](https://travis-ci.org/zhukovra/paymentpage_sdk)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/9f134244471fa4d2fe8e/test_coverage)](https://codeclimate.com/github/zhukovra/paymentpage_sdk/test_coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/9f134244471fa4d2fe8e/maintainability)](https://codeclimate.com/github/zhukovra/paymentpage_sdk/maintainability)
+[![Build Status](https://travis-ci.org/ITECOMMPAY/paymentpage_sdk.svg?branch=master)](https://travis-ci.org/ITECOMMPAY/paymentpage_sdk)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/13f0385331642461cba7/test_coverage)](https://codeclimate.com/github/ITECOMMPAY/paymentpage_sdk/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/13f0385331642461cba7/maintainability)](https://codeclimate.com/github/ITECOMMPAY/paymentpage_sdk/maintainability)
 
 This is a set of libraries in the PHP language to ease integration of your service
 with the EcommPay Payment Page.
