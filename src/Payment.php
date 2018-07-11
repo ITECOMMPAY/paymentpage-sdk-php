@@ -62,6 +62,21 @@ namespace ecommpay;
 class Payment
 {
     /**
+     * Payment from customer account
+     */
+    const PURCHASE_TYPE = 'purchase';
+
+    /**
+     * Payment to customer account
+     */
+    const PAYOUT_TYPE = 'payout';
+
+    /**
+     * Recurring payment
+     */
+    const RECURRING_TYPE = 'recurring';
+
+    /**
      * @var array Payment parameters
      */
     private $params;
