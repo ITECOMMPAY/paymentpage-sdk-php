@@ -77,6 +77,8 @@ class Gate
             throw new ProcessException("Action: {$action} not supported yet");
         }
 
+        $validator = new Request\Validator($action, $params);
+        $validator->check();
         $request = Request::get($action, $params);
         return $this->sender->send($action, $request);
     }
