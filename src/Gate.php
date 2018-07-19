@@ -64,9 +64,9 @@ class Gate
     }
 
     /**
-     * Send request to gate 
-     * 
-     * @param string $action Request action 
+     * Send request to gate
+     *
+     * @param string $action Request action
      * @param array $params Request params
      * @throws ProcessException
      * @return mixed
