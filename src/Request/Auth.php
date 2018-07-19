@@ -1,6 +1,6 @@
 <?php
 
-namespace ecommpay;
+namespace ecommpay\Request;
 
 /**
  * Auth
@@ -10,5 +10,5 @@ namespace ecommpay;
  * @license PHP Version 7+
  */
 class Auth
-    extends Request\Sale
+    extends Sale
 {}

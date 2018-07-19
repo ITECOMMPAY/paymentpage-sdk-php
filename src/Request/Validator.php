@@ -1,6 +1,9 @@
 <?php
 
-namespace ecommpay;
+namespace ecommpay\Request;
+
+use ecommpay\Request;
+use ecommpay\ProcessException;
 
 /**
  * Validator
@@ -140,28 +143,28 @@ class Validator
      */
     public function check()
     {
-        switch ($action)
+        switch ($this->action)
         {
-        case self::PAYMENT_CARD_SALE:
-        case self::PAYMENT_CARD_AUTH:
+        case Request::PAYMENT_CARD_SALE:
+        case Request::PAYMENT_CARD_AUTH:
             $this->checkGeneralInfo();
             $this->checkCardInfo();
             $this->checkCustomerInfo();
             $this->checkPaymentInfo();
             break;
-        case self::PAYMENT_CARD_REFUND:
+        case Request::PAYMENT_CARD_REFUND:
             $this->checkGeneralInfo();
             $this->checkPaymentInfo();
             break;
-        case self::PAYMENT_CARD_CAPTURE:
-        case self::PAYMENT_CARD_CANCEL:
+        case Request::PAYMENT_CARD_CAPTURE:
+        case Request::PAYMENT_CARD_CANCEL:
             $this->checkGeneralInfo();
             break;
-        case self::PAYMENT_CARD_COMPLETE:
+        case Request::PAYMENT_CARD_COMPLETE:
             $this->checkGeneralInfo();
             $this->commonCheck(['pares' => self::TYPE_STRING, 'md' => self::TYPE_STRING, self::REQUIRED => ['pares', 'md']]);
             break;
-        case self::PAYMENT_STATUS:
+        case Request::PAYMENT_STATUS:
             $this->checkGeneralInfo();
             $this->commonCheck(['destination' => self::TYPE_STRING, self::REQUIRED => []]);
             break;
@@ -209,7 +212,7 @@ class Validator
     {
         $this->commonCheck(self::$cardInfo);
         $this->maxLengthCheck(['pan'], 32);
-        $this->regexpCheck(['card_holder' => self::CARDHOLDER_REGEXP, 'cvv' => CVV_REGEXP]);
+        $this->regexpCheck(['card_holder' => self::CARDHOLDER_REGEXP, 'cvv' => self::CVV_REGEXP]);
     }
 
     /**
@@ -221,16 +224,14 @@ class Validator
     private function commonCheck(array $struct)
     {
         $required = $struct[self::REQUIRED];
-        $paramsDiff = array_diff($required, $this->params);
+        $paramsDiff = array_diff($required, array_keys($this->params));
 
         if (count($paramsDiff) > 0) {
             throw new ProcessException('Required fields ' . var_export($paramsDiff, true) . ' not present in source request');
         }
 
         foreach ($this->params as $fieldName => $fieldValue) {
-            if (!array_key_exists($fieldName, $struct)) {
-                throw new ProcessException("Field name: {$fieldName} not present in system struct yet");
-            } else {
+            if (array_key_exists($fieldName, $struct)) {
                 $fieldValueType = gettype($fieldValue);
                 if ($struct[$fieldName] == self::TYPE_STRING && !is_string($fieldValue)) {
                     throw new ProcessException("Field name: {$fieldName} have to be STRING type. Actual type: {$fieldValueType}");

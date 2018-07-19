@@ -1,8 +1,6 @@
 <?php
 
-namespace ecommpay;
-
-use Request\Validator;
+namespace ecommpay\Request;
 
 /**
  * Sale
@@ -12,7 +10,7 @@ use Request\Validator;
  * @license PHP Version 7+
  */
 class Sale
-    extends ArrayObject
+    extends \ArrayObject
 {
     public function __construct(array $params)
     {

@@ -30,7 +30,7 @@ class Request
      * @throws ProcessException
      * @return ArrayObject
      */
-    public static function get(string $action, array $params) : ArrayObject
+    public static function get(string $action, array $params) : \ArrayObject
     {
         $request = null;
         switch ($action)

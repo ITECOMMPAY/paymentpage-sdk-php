@@ -1,8 +1,6 @@
 <?php
 
-namespace ecommpay;
-
-use Request\Validator;
+namespace ecommpay\Request;
 
 /**
  * Refund
@@ -12,7 +10,7 @@ use Request\Validator;
  * @license PHP Version 7+
  */
 class Refund
-    extends ArrayObject
+    extends \ArrayObject
 {
     /**
      * __construct

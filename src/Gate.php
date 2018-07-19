@@ -25,14 +25,11 @@ class Gate
      */
     private $signatureHandler;
 
-    private $sender;
-
     /**
      * @param string $secret Secret key
      */
     public function __construct($secret)
     {
-        $this->sender = new Sender();
         $this->signatureHandler = new SignatureHandler($secret);
         $this->paymentPageUrlBuilder = new PaymentPage($this->signatureHandler);
     }
@@ -69,7 +66,6 @@ class Gate
      * @param string $action Request action
      * @param array $params Request params
      * @throws ProcessException
-     * @return mixed
      */
     public function send(string $action, array $params)
     {
@@ -79,7 +75,10 @@ class Gate
 
         $validator = new Request\Validator($action, $params);
         $validator->check();
-        $request = Request::get($action, $params);
-        return $this->sender->send($action, $request);
+        $request = (array) Request::get($action, $params);
+        $signature = $this->signatureHandler->sign($request);
+        $request['general']['signature'] = $signature;
+        $sender = new Sender($action, $request);
+        return $sender->send($action, $request);
     }
 }
