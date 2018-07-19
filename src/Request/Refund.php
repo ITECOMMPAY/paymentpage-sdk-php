@@ -11,6 +11,7 @@ namespace ecommpay\Request;
  */
 class Refund extends \ArrayObject
 {
+
     /**
      * __construct
      *
@@ -25,7 +26,7 @@ class Refund extends \ArrayObject
         foreach ($params as $name => $value) {
             if (in_array($name, $general)) {
                 $request['general'][$name] = $value;
-            } else if (in_array($name, $card)) {
+            } elseif (in_array($name, $card)) {
                 $request['card'][$name] = $value;
             }
         }

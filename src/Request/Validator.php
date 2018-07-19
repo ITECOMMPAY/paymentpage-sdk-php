@@ -69,7 +69,7 @@ class Validator
     ];
 
     /**
-     * Customer info structure 
+     * Customer info structure
      *
      * @var array
      */
@@ -150,23 +150,23 @@ class Validator
                 $this->checkCardInfo();
                 $this->checkCustomerInfo();
                 $this->checkPaymentInfo();
-            break;
+                break;
             case Request::PAYMENT_CARD_REFUND:
                 $this->checkGeneralInfo();
-            $this->checkPaymentInfo();
-            break;
+                $this->checkPaymentInfo();
+                break;
             case Request::PAYMENT_CARD_CAPTURE:
             case Request::PAYMENT_CARD_CANCEL:
                 $this->checkGeneralInfo();
-            break;
+                break;
             case Request::PAYMENT_CARD_COMPLETE:
                 $this->checkGeneralInfo();
                 $this->commonCheck(['pares' => self::TYPE_STRING, 'md' => self::TYPE_STRING, self::REQUIRED => ['pares', 'md']]);
-            break;
+                break;
             case Request::PAYMENT_STATUS:
                 $this->checkGeneralInfo();
                 $this->commonCheck(['destination' => self::TYPE_STRING, self::REQUIRED => []]);
-            break;
+                break;
             case 'default':
                 throw new ProcessException("Action: {$this->action} not supported yet");
         }

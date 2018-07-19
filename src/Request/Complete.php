@@ -11,6 +11,7 @@ namespace ecommpay\Request;
  */
 class Complete extends \ArrayObject
 {
+
     /**
      * __construct
      *

@@ -11,6 +11,12 @@ namespace ecommpay\Request;
  */
 class Sale extends \ArrayObject
 {
+
+    /**
+     * __construct
+     *
+     * @param array $params
+     */
     public function __construct(array $params)
     {
         $request = [];

@@ -11,6 +11,7 @@ namespace ecommpay\Request;
  */
 class PaymentStatus extends \ArrayObject
 {
+
     /**
      * __construct
      *

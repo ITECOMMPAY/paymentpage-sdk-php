@@ -36,25 +36,25 @@ class Request
         switch ($action) {
             case self::PAYMENT_CARD_SALE:
                 $request = new Request\Sale($params);
-            break;
+                break;
             case self::PAYMENT_CARD_REFUND:
                 $request = new Request\Refund($params);
-            break;
+                break;
             case self::PAYMENT_CARD_AUTH:
                 $request = new Request\Auth($params);
-            break;
+                break;
             case self::PAYMENT_CARD_CAPTURE:
                 $request = new Request\Capture($params);
-            break;
+                break;
             case self::PAYMENT_CARD_COMPLETE:
                 $request = new Request\Complete($params);
-            break;
+                break;
             case self::PAYMENT_CARD_CANCEL:
                 $request = new Request\Cancel($params);
-            break;
+                break;
             case self::PAYMENT_STATUS:
                 $request = new Request\PaymentStatus($params);
-            break;
+                break;
             case 'default':
                 throw new ProcessException("Action: {$action} not supported yet");
         }
