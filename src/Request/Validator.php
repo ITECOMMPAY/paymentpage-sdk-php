@@ -162,8 +162,8 @@ class Validator
             case Request::PAYMENT_CARD_COMPLETE:
                 $this->checkGeneralInfo();
                 $this->commonCheck([
-                    'pares' => self::TYPE_STRING, 
-                    'md' => self::TYPE_STRING, 
+                    'pares' => self::TYPE_STRING,
+                    'md' => self::TYPE_STRING,
                     self::REQUIRED => ['pares', 'md']
                 ]);
                 break;
@@ -206,8 +206,8 @@ class Validator
         unset($fields['save']);
         $this->maxLengthCheck($fields);
         $this->regexpCheck([
-            'country' => self::COUNTRY_REGEXP, 
-            'phone' => self::PHONE_REGEXP, 
+            'country' => self::COUNTRY_REGEXP,
+            'phone' => self::PHONE_REGEXP,
             'day_of_birth' => self::DAY_OF_BIRTH_REGEXP
         ]);
     }
