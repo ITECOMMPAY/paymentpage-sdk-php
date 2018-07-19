@@ -161,7 +161,11 @@ class Validator
                 break;
             case Request::PAYMENT_CARD_COMPLETE:
                 $this->checkGeneralInfo();
-                $this->commonCheck(['pares' => self::TYPE_STRING, 'md' => self::TYPE_STRING, self::REQUIRED => ['pares', 'md']]);
+                $this->commonCheck([
+                    'pares' => self::TYPE_STRING, 
+                    'md' => self::TYPE_STRING, 
+                    self::REQUIRED => ['pares', 'md']
+                ]);
                 break;
             case Request::PAYMENT_STATUS:
                 $this->checkGeneralInfo();
@@ -201,7 +205,11 @@ class Validator
         unset($fields[self::REQUIRED]);
         unset($fields['save']);
         $this->maxLengthCheck($fields);
-        $this->regexpCheck(['country' => self::COUNTRY_REGEXP, 'phone' => self::PHONE_REGEXP, 'day_of_birth' => self::DAY_OF_BIRTH_REGEXP]);
+        $this->regexpCheck([
+            'country' => self::COUNTRY_REGEXP, 
+            'phone' => self::PHONE_REGEXP, 
+            'day_of_birth' => self::DAY_OF_BIRTH_REGEXP
+        ]);
     }
 
     /**
@@ -226,23 +234,33 @@ class Validator
         $paramsDiff = array_diff($required, array_keys($this->params));
 
         if (count($paramsDiff) > 0) {
-            throw new ProcessException('Required fields ' . var_export($paramsDiff, true) . ' not present in source request');
+            throw new ProcessException(
+                'Required fields ' . var_export($paramsDiff, true) . ' not present in source request'
+            );
         }
 
         foreach ($this->params as $fieldName => $fieldValue) {
             if (array_key_exists($fieldName, $struct)) {
                 $fieldValueType = gettype($fieldValue);
                 if ($struct[$fieldName] == self::TYPE_STRING && !is_string($fieldValue)) {
-                    throw new ProcessException("Field name: {$fieldName} have to be STRING type. Actual type: {$fieldValueType}");
+                    throw new ProcessException(
+                        "Field name: {$fieldName} have to be STRING type. Actual type: {$fieldValueType}"
+                    );
                 } elseif ($struct[$fieldName] == self::TYPE_INTEGER) {
                     if (!is_int($fieldValue)) {
-                        throw new ProcessException("Field name: {$fieldName} have to be INTEGER type. Actual type: {$fieldValueType}");
+                        throw new ProcessException(
+                            "Field name: {$fieldName} have to be INTEGER type. Actual type: {$fieldValueType}"
+                        );
                     }
                     if ($fieldValue <= 0) {
-                        throw new ProcessException("Integer field name: {$fieldName} has negative or 0 value");
+                        throw new ProcessException(
+                            "Integer field name: {$fieldName} has negative or 0 value"
+                        );
                     }
                 } elseif ($struct[$fieldName] == self::TYPE_BOOL && !is_bool($fieldValue)) {
-                    throw new ProcessException("Field name: {$fieldName} have to be BOOL type. Actual type: {$fieldValueType}");
+                    throw new ProcessException(
+                        "Field name: {$fieldName} have to be BOOL type. Actual type: {$fieldValueType}"
+                    );
                 }
             }
         }
@@ -259,7 +277,9 @@ class Validator
     {
         foreach ($fields as $field) {
             if (array_key_exists($field, $this->params) && strlen($this->params[$field]) > $maxLength) {
-                throw new ProcessException("Length of Param: {$field} with value {$this->params[$field]} more than {$maxLength} symbols");
+                throw new ProcessException(
+                    "Length of Param: {$field} with value {$this->params[$field]} more than {$maxLength} symbols"
+                );
             }
         }
     }
@@ -274,7 +294,9 @@ class Validator
     {
         foreach ($conditions as $name => $regexp) {
             if (array_key_exists($name, $this->params) && !preg_match('/' . $regexp . '/', $this->params[$name])) {
-                throw new ProcessException("Param name {$name} with value {$this->params[$name]} doesnt match regular expression {$regexp}");
+                throw new ProcessException(
+                    "Param name {$name} with value {$this->params[$name]} doesnt match regular expression {$regexp}"
+                );
             }
         }
     }
