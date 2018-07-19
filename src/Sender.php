@@ -15,14 +15,14 @@ class Sender
 
     /**
      * action
-     * 
+     *
      * @var string
      */
     private $action;
 
     /**
      * request
-     * 
+     *
      * @var array
      */
     private $request;
@@ -52,7 +52,6 @@ class Sender
         curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($this->request));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $response = curl_exec($curl);
-        var_dump($response); die();
         curl_close($curl);
         return $response;
     }

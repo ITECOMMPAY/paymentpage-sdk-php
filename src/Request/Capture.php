@@ -9,8 +9,7 @@ namespace ecommpay\Request;
  * @author Dmitry Fedorov <d.fedorov@it.ecommpay.com>
  * @license PHP Version 7+
  */
-class Capture
-    extends \ArrayObject
+class Capture extends \ArrayObject
 {
     /**
      * __construct

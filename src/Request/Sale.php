@@ -9,8 +9,7 @@ namespace ecommpay\Request;
  * @author Dmitry Fedorov <d.fedorov@it.ecommpay.com>
  * @license PHP Version 7+
  */
-class Sale
-    extends \ArrayObject
+class Sale extends \ArrayObject
 {
     public function __construct(array $params)
     {
@@ -23,11 +22,11 @@ class Sale
         foreach ($params as $name => $value) {
             if (in_array($name, $general)) {
                 $request['general'][$name] = $value;
-            } else if (in_array($name, $customer)) {
+            } elseif (in_array($name, $customer)) {
                 $request['customer'][$name] = $value;
-            } else if (in_array($name, $payment)) {
+            } elseif (in_array($name, $payment)) {
                 $request['payment'][$name] = $value;
-            } else if (in_array($name, $card)) {
+            } elseif (in_array($name, $card)) {
                 $request['card'][$name] = $value;
             }
         }

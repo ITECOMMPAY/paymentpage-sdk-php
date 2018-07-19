@@ -3,18 +3,18 @@
 namespace ecommpay;
 
 /**
- * Request 
- * 
+ * Request
+ *
  * @copyright it ecommpay
- * @author Dmitry Fedorov <d.fedorov@it.ecommpay.com> 
+ * @author Dmitry Fedorov <d.fedorov@it.ecommpay.com>
  * @license PHP Version 7+
  */
 class Request
 {
-    //payment block
+    // payment block
     const PAYMENT_STATUS = 'payment/status';
 
-    //payment_card block
+    // payment_card block
     const PAYMENT_CARD_SALE = 'payment/card/sale';
     const PAYMENT_CARD_REFUND = 'payment/card/refund';
     const PAYMENT_CARD_AUTH = 'payment/card/auth';
@@ -24,7 +24,7 @@ class Request
 
     /**
      * Get JSON Request
-     * 
+     *
      * @param string $action Request action
      * @param array $params Request params
      * @throws ProcessException
@@ -33,38 +33,37 @@ class Request
     public static function get(string $action, array $params) : \ArrayObject
     {
         $request = null;
-        switch ($action)
-        {
-        case self::PAYMENT_CARD_SALE:
-            $request = new Request\Sale($params);
+        switch ($action) {
+            case self::PAYMENT_CARD_SALE:
+                $request = new Request\Sale($params);
             break;
-        case self::PAYMENT_CARD_REFUND:
-            $request = new Request\Refund($params);
+            case self::PAYMENT_CARD_REFUND:
+                $request = new Request\Refund($params);
             break;
-        case self::PAYMENT_CARD_AUTH:
-            $request = new Request\Auth($params);
+            case self::PAYMENT_CARD_AUTH:
+                $request = new Request\Auth($params);
             break;
-        case self::PAYMENT_CARD_CAPTURE:
-            $request = new Request\Capture($params);
+            case self::PAYMENT_CARD_CAPTURE:
+                $request = new Request\Capture($params);
             break;
-        case self::PAYMENT_CARD_COMPLETE:
-            $request = new Request\Complete($params);
+            case self::PAYMENT_CARD_COMPLETE:
+                $request = new Request\Complete($params);
             break;
-        case self::PAYMENT_CARD_CANCEL:
-            $request = new Request\Cancel($params);
+            case self::PAYMENT_CARD_CANCEL:
+                $request = new Request\Cancel($params);
             break;
-        case self::PAYMENT_STATUS:
-            $request = new Request\PaymentStatus($params);
+            case self::PAYMENT_STATUS:
+                $request = new Request\PaymentStatus($params);
             break;
-        case 'default':
-            throw new ProcessException("Action: {$action} not supported yet");
+            case 'default':
+                throw new ProcessException("Action: {$action} not supported yet");
         }
         return $request;
     }
 
     /**
      * Get list of permitted actions
-     * 
+     *
      * @return array
      */
     public static function getPermittedActions() : array
@@ -80,4 +79,3 @@ class Request
         ];
     }
 }
-

@@ -14,7 +14,7 @@ use ecommpay\ProcessException;
  */
 class Validator
 {
-    //regexp block
+    // regexp block
     const CURRENCY_REGEXP = '^[A-Z]{3}$';
     const COUNTRY_REGEXP = '^[A-Z]{2}$';
     const PHONE_REGEXP = '^[0-9]{4,24}$';
@@ -22,7 +22,7 @@ class Validator
     const CARDHOLDER_REGEXP = "^[a-zA-Zа-яА-ЯёрстуфхцчшщъыьэюЁРСТУФХЦЧШЩЪЫЬЭЮ0-9\\s\\-.']+$";
     const CVV_REGEXP = '^[0-9]{3,4}$';
 
-    //custom block
+    // custom block
     const TYPE_STRING = 'string';
     const TYPE_INTEGER = 'integer';
     const TYPE_BOOL = 'bool';
@@ -30,25 +30,25 @@ class Validator
 
     /**
      * Request action
-     * 
+     *
      * @var string
      */
     private $action;
 
     /**
      * Request params
-     * 
+     *
      * @var array
      */
     private $params;
 
     /**
      * General info structure
-     * 
+     *
      * @var array
      */
     public static $generalInfo = [
-        'project_id' => self::TYPE_INTEGER, //e. g. [fieldName] => [dataType => required]
+        'project_id' => self::TYPE_INTEGER, // e. g. [fieldName] => [dataType => required]
         'payment_id' => self::TYPE_STRING,
         'terminal_callback_url' => self::TYPE_STRING,
         self::REQUIRED => ['project_id', 'payment_id'],
@@ -56,7 +56,7 @@ class Validator
 
     /**
      * Payment info structure
-     * 
+     *
      * @var array
      */
     public static $paymentInfo = [
@@ -70,7 +70,7 @@ class Validator
 
     /**
      * Customer info structure 
-     * 
+     *
      * @var array
      */
     public static $customerInfo = [
@@ -110,7 +110,7 @@ class Validator
 
     /**
      * Card info structure
-     * 
+     *
      * @var mixed
      * @access private
      */
@@ -143,33 +143,32 @@ class Validator
      */
     public function check()
     {
-        switch ($this->action)
-        {
-        case Request::PAYMENT_CARD_SALE:
-        case Request::PAYMENT_CARD_AUTH:
-            $this->checkGeneralInfo();
-            $this->checkCardInfo();
-            $this->checkCustomerInfo();
+        switch ($this->action) {
+            case Request::PAYMENT_CARD_SALE:
+            case Request::PAYMENT_CARD_AUTH:
+                $this->checkGeneralInfo();
+                $this->checkCardInfo();
+                $this->checkCustomerInfo();
+                $this->checkPaymentInfo();
+            break;
+            case Request::PAYMENT_CARD_REFUND:
+                $this->checkGeneralInfo();
             $this->checkPaymentInfo();
             break;
-        case Request::PAYMENT_CARD_REFUND:
-            $this->checkGeneralInfo();
-            $this->checkPaymentInfo();
+            case Request::PAYMENT_CARD_CAPTURE:
+            case Request::PAYMENT_CARD_CANCEL:
+                $this->checkGeneralInfo();
             break;
-        case Request::PAYMENT_CARD_CAPTURE:
-        case Request::PAYMENT_CARD_CANCEL:
-            $this->checkGeneralInfo();
+            case Request::PAYMENT_CARD_COMPLETE:
+                $this->checkGeneralInfo();
+                $this->commonCheck(['pares' => self::TYPE_STRING, 'md' => self::TYPE_STRING, self::REQUIRED => ['pares', 'md']]);
             break;
-        case Request::PAYMENT_CARD_COMPLETE:
-            $this->checkGeneralInfo();
-            $this->commonCheck(['pares' => self::TYPE_STRING, 'md' => self::TYPE_STRING, self::REQUIRED => ['pares', 'md']]);
+            case Request::PAYMENT_STATUS:
+                $this->checkGeneralInfo();
+                $this->commonCheck(['destination' => self::TYPE_STRING, self::REQUIRED => []]);
             break;
-        case Request::PAYMENT_STATUS:
-            $this->checkGeneralInfo();
-            $this->commonCheck(['destination' => self::TYPE_STRING, self::REQUIRED => []]);
-            break;
-        case 'default':
-            throw new ProcessException("Action: {$this->action} not supported yet");
+            case 'default':
+                throw new ProcessException("Action: {$this->action} not supported yet");
         }
     }
 
@@ -217,7 +216,7 @@ class Validator
 
     /**
      * Common check
-     * 
+     *
      * @param array $struct Structure
      * @throws ProcessException
      */
@@ -235,14 +234,14 @@ class Validator
                 $fieldValueType = gettype($fieldValue);
                 if ($struct[$fieldName] == self::TYPE_STRING && !is_string($fieldValue)) {
                     throw new ProcessException("Field name: {$fieldName} have to be STRING type. Actual type: {$fieldValueType}");
-                } else if ($struct[$fieldName] == self::TYPE_INTEGER) {
+                } elseif ($struct[$fieldName] == self::TYPE_INTEGER) {
                     if (!is_int($fieldValue)) {
                         throw new ProcessException("Field name: {$fieldName} have to be INTEGER type. Actual type: {$fieldValueType}");
                     }
                     if ($fieldValue <= 0) {
                         throw new ProcessException("Integer field name: {$fieldName} has negative or 0 value");
                     }
-                } else if ($struct[$fieldName] == self::TYPE_BOOL && !is_bool($fieldValue)) {
+                } elseif ($struct[$fieldName] == self::TYPE_BOOL && !is_bool($fieldValue)) {
                     throw new ProcessException("Field name: {$fieldName} have to be BOOL type. Actual type: {$fieldValueType}");
                 }
             }
@@ -251,7 +250,7 @@ class Validator
 
     /**
      * Checking maximum length
-     * 
+     *
      * @param array $fields Fields
      * @param int $maxLength Maximum field length
      * @throws ProcessException
@@ -267,7 +266,7 @@ class Validator
 
     /**
      * Check field regular expression
-     * 
+     *
      * @param array $conditions [fieldName => regular_expression]
      * @throws ProcessException
      */
