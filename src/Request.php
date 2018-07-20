@@ -28,7 +28,7 @@ class Request
      * @param string $action Request action
      * @param array $params Request params
      * @throws ProcessException
-     * @return ArrayObject
+     * @return \ArrayObject
      */
     public static function get(string $action, array $params) : \ArrayObject
     {

@@ -66,6 +66,7 @@ class Gate
      * @param string $action Request action
      * @param array $params Request params
      * @throws ProcessException
+     * @return mixed
      */
     public function send(string $action, array $params)
     {
@@ -78,7 +79,6 @@ class Gate
         $request = (array) Request::get($action, $params);
         $signature = $this->signatureHandler->sign($request);
         $request['general']['signature'] = $signature;
-        $sender = new Sender($action, $request);
-        return $sender->send($action, $request);
+        return Sender::send($action, $request);
     }
 }

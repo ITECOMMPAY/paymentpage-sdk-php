@@ -26,8 +26,8 @@ class Refund extends \ArrayObject
         foreach ($params as $name => $value) {
             if (in_array($name, $general)) {
                 $request['general'][$name] = $value;
-            } elseif (in_array($name, $card)) {
-                $request['card'][$name] = $value;
+            } elseif (in_array($name, $payment)) {
+                $request['payment'][$name] = $value;
             }
         }
 
