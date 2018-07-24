@@ -5,6 +5,7 @@ namespace ecommpay\tests;
 use ecommpay\Callback;
 use ecommpay\Gate;
 use ecommpay\Payment;
+use ecommpay\ProcessException;
 
 class GateTest extends \PHPUnit\Framework\TestCase
 {
@@ -28,5 +29,15 @@ class GateTest extends \PHPUnit\Framework\TestCase
         $callback = $this->gate->handleCallback(require __DIR__ . '/data/callback.php');
 
         self::assertInstanceOf(Callback::class, $callback);
+    }
+
+    public function testSend()
+    {
+        try
+        {
+            $this->gate->send('ddd', []);
+        } catch (ProcessException $e) {
+            $this->assertEquals('Action: ddd not supported yet', $e->getMessage());
+        }
     }
 }

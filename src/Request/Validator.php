@@ -140,6 +140,7 @@ class Validator
     /**
      * Check request params
      * @throws ProcessException
+     * @return mixed
      */
     public function check()
     {
@@ -171,9 +172,10 @@ class Validator
                 $this->checkGeneralInfo();
                 $this->commonCheck(['destination' => self::TYPE_STRING, self::REQUIRED => []]);
                 break;
-            case 'default':
+            default:
                 throw new ProcessException("Action: {$this->action} not supported yet");
         }
+        return true;
     }
 
     /**
@@ -235,7 +237,7 @@ class Validator
 
         if (count($paramsDiff) > 0) {
             throw new ProcessException(
-                'Required fields ' . var_export($paramsDiff, true) . ' not present in source request'
+                'Required fields ' . implode(',', $paramsDiff) . ' not present in source request'
             );
         }
 

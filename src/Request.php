@@ -55,7 +55,7 @@ class Request
             case self::PAYMENT_STATUS:
                 $request = new Request\PaymentStatus($params);
                 break;
-            case 'default':
+            default:
                 throw new ProcessException("Action: {$action} not supported yet");
         }
         return $request;
