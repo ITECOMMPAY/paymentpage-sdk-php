@@ -6,6 +6,7 @@ use ecommpay\Request\Complete;
 
 class CompleteTest extends \PHPUnit\Framework\TestCase
 {
+
     public function testConstruct()
     {
         $params = [

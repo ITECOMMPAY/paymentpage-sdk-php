@@ -29,13 +29,13 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
         $validator = new Validator(Request::PAYMENT_CARD_AUTH, $this->params);
         $this->assertTrue($validator->check());
     }
-    
+
     public function testCheckSale()
     {
         $validator = new Validator(Request::PAYMENT_CARD_SALE, $this->params);
         $this->assertTrue($validator->check());
     }
-    
+
     public function testCheckRefund()
     {
         $validator = new Validator(Request::PAYMENT_CARD_REFUND, $this->params);
@@ -73,30 +73,31 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
         $params['project_id'] = 'test';
         $validator = new Validator(Request::PAYMENT_CARD_SALE, $params);
 
-        try 
-        {
+        try {
             $validator->check();
         } catch (ProcessException $e) {
-            $this->assertEquals('Field name: project_id have to be INTEGER type. Actual type: string', $e->getMessage());
+            $this->assertEquals(
+                'Field name: project_id have to be INTEGER type. Actual type: string', $e->getMessage()
+            );
         }
 
         $params = $this->getParams();
         $params['payment_id'] = 111;
         $validator = new Validator(Request::PAYMENT_CARD_SALE, $params);
 
-        try 
-        {
+        try {
             $validator->check();
         } catch (ProcessException $e) {
-            $this->assertEquals('Field name: payment_id have to be STRING type. Actual type: integer', $e->getMessage());
+            $this->assertEquals(
+                'Field name: payment_id have to be STRING type. Actual type: integer', $e->getMessage()
+            );
         }
 
         $params = $this->getParams();
         $params['project_id'] = -111;
         $validator = new Validator(Request::PAYMENT_CARD_SALE, $params);
 
-        try 
-        {
+        try {
             $validator->check();
         } catch (ProcessException $e) {
             $this->assertEquals('Integer field name: project_id has negative or 0 value', $e->getMessage());
@@ -106,8 +107,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
         $params['save'] = 'string';
         $validator = new Validator(Request::PAYMENT_CARD_SALE, $params);
 
-        try 
-        {
+        try {
             $validator->check();
         } catch (ProcessException $e) {
             $this->assertEquals('Field name: save have to be BOOL type. Actual type: string', $e->getMessage());
@@ -118,8 +118,7 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
         unset($params['project_id']);
         $validator = new Validator(Request::PAYMENT_CARD_SALE, $params);
 
-        try 
-        {
+        try {
             $validator->check();
         } catch (ProcessException $e) {
             $this->assertEquals('Required fields project_id not present in source request', $e->getMessage());
@@ -127,14 +126,16 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
 
         // max length check
         $params = $this->getParams();
-        $params['pan'] = 'sadkh;shaf;askjdfhaj;skdfhjsakhfsajhfaksjfhaksj;hfkja;shfjksdhfkjshfjksafhk;sa';
+        $params['pan'] = 'sadkh;shaf;askjdfhaj;skdfhjsakhfs';
         $validator = new Validator(Request::PAYMENT_CARD_SALE, $params);
 
-        try 
-        {
+        try {
             $validator->check();
         } catch (ProcessException $e) {
-            $this->assertEquals('Length of Param: pan with value sadkh;shaf;askjdfhaj;skdfhjsakhfsajhfaksjfhaksj;hfkja;shfjksdhfkjshfjksafhk;sa more than 32 symbols', $e->getMessage());
+            $this->assertEquals(
+                'Length of Param: pan with value sadkh;shaf;askjdfhaj;skdfhjsakhfs more than 32 symbols',
+                $e->getMessage()
+            );
         }
 
         // regexp check
@@ -142,17 +143,17 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
         $params['currency'] = 'AAAAA';
         $validator = new Validator(Request::PAYMENT_CARD_SALE, $params);
 
-        try 
-        {
+        try {
             $validator->check();
         } catch (ProcessException $e) {
-            $this->assertEquals('Param name currency with value AAAAA doesnt match regular expression ^[A-Z]{3}$', $e->getMessage());
+            $this->assertEquals(
+                'Param name currency with value AAAAA doesnt match regular expression ^[A-Z]{3}$', $e->getMessage()
+            );
         }
 
         $validator = new Validator('ddd', $params);
 
-        try 
-        {
+        try {
             $validator->check();
         } catch (ProcessException $e) {
             $this->assertEquals('Action: ddd not supported yet', $e->getMessage());

@@ -33,8 +33,7 @@ class GateTest extends \PHPUnit\Framework\TestCase
 
     public function testSend()
     {
-        try
-        {
+        try {
             $this->gate->send('ddd', []);
         } catch (ProcessException $e) {
             $this->assertEquals('Action: ddd not supported yet', $e->getMessage());

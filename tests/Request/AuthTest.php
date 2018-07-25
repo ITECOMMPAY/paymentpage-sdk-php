@@ -6,6 +6,7 @@ use ecommpay\Request\Auth;
 
 class AuthTest extends \PHPUnit\Framework\TestCase
 {
+
     public function testConstruct()
     {
         $params = [

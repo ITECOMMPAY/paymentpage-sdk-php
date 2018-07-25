@@ -6,6 +6,7 @@ use ecommpay\Request\Sale;
 
 class SaleTest extends \PHPUnit\Framework\TestCase
 {
+
     public function testConstruct()
     {
         $params = [

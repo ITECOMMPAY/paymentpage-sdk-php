@@ -6,6 +6,7 @@ use ecommpay\Request\Refund;
 
 class RefundTest extends \PHPUnit\Framework\TestCase
 {
+
     public function testConstruct()
     {
         $params = [

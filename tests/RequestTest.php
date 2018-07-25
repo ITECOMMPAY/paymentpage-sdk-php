@@ -39,43 +39,63 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
     public function testGetSale()
     {
-        $this->assertEquals('ecommpay\Request\Sale', get_class(Request::get(Request::PAYMENT_CARD_SALE, $this->params)));
+        $this->assertEquals(
+            'ecommpay\Request\Sale',
+            get_class(Request::get(Request::PAYMENT_CARD_SALE,
+            $this->params)));
     }
 
     public function testGetAuth()
     {
-        $this->assertEquals('ecommpay\Request\Auth', get_class(Request::get(Request::PAYMENT_CARD_AUTH, $this->params)));
+        $this->assertEquals(
+            'ecommpay\Request\Auth',
+            get_class(Request::get(Request::PAYMENT_CARD_AUTH,
+            $this->params)));
     }
 
     public function testGetRefund()
     {
-        $this->assertEquals('ecommpay\Request\Refund', get_class(Request::get(Request::PAYMENT_CARD_REFUND, $this->params)));
+        $this->assertEquals(
+            'ecommpay\Request\Refund',
+            get_class(Request::get(Request::PAYMENT_CARD_REFUND,
+            $this->params)));
     }
 
     public function testGetPaymentStatus()
     {
-        $this->assertEquals('ecommpay\Request\PaymentStatus', get_class(Request::get(Request::PAYMENT_STATUS, $this->params)));
+        $this->assertEquals(
+            'ecommpay\Request\PaymentStatus',
+            get_class(Request::get(Request::PAYMENT_STATUS,
+            $this->params)));
     }
 
     public function testGetCancel()
     {
-        $this->assertEquals('ecommpay\Request\Cancel', get_class(Request::get(Request::PAYMENT_CARD_CANCEL, $this->params)));
+        $this->assertEquals(
+            'ecommpay\Request\Cancel',
+            get_class(Request::get(Request::PAYMENT_CARD_CANCEL,
+            $this->params)));
     }
 
     public function testGetCapture()
     {
-        $this->assertEquals('ecommpay\Request\Capture', get_class(Request::get(Request::PAYMENT_CARD_CAPTURE, $this->params)));
+        $this->assertEquals(
+            'ecommpay\Request\Capture',
+            get_class(Request::get(Request::PAYMENT_CARD_CAPTURE,
+            $this->params)));
     }
 
     public function testGetComplete()
     {
-        $this->assertEquals('ecommpay\Request\Complete', get_class(Request::get(Request::PAYMENT_CARD_COMPLETE, $this->params)));
+        $this->assertEquals(
+            'ecommpay\Request\Complete',
+            get_class(Request::get(Request::PAYMENT_CARD_COMPLETE,
+            $this->params)));
     }
 
     public function testUnknownAction()
     {
-        try
-        {
+        try {
             Request::get('ololo', $this->params);
         } catch (ProcessException $e) {
             $this->assertEquals('Action: ololo not supported yet', $e->getMessage());

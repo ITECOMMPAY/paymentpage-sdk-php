@@ -6,6 +6,7 @@ use ecommpay\Request\Cancel;
 
 class CancelTest extends \PHPUnit\Framework\TestCase
 {
+
     public function testConstruct()
     {
         $params = [

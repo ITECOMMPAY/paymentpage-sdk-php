@@ -6,6 +6,7 @@ use ecommpay\Request\PaymentStatus;
 
 class PaymentStatusTest extends \PHPUnit\Framework\TestCase
 {
+
     public function testConstruct()
     {
         $params = [

@@ -6,6 +6,7 @@ use ecommpay\Request\Capture;
 
 class CaptureTest extends \PHPUnit\Framework\TestCase
 {
+
     public function testConstruct()
     {
         $params = [
