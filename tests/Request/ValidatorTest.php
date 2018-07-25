@@ -77,7 +77,8 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
             $validator->check();
         } catch (ProcessException $e) {
             $this->assertEquals(
-                'Field name: project_id have to be INTEGER type. Actual type: string', $e->getMessage()
+                'Field name: project_id have to be INTEGER type. Actual type: string',
+                $e->getMessage()
             );
         }
 
@@ -89,7 +90,8 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
             $validator->check();
         } catch (ProcessException $e) {
             $this->assertEquals(
-                'Field name: payment_id have to be STRING type. Actual type: integer', $e->getMessage()
+                'Field name: payment_id have to be STRING type. Actual type: integer',
+                $e->getMessage()
             );
         }
 
@@ -147,7 +149,8 @@ class ValidatorTest extends \PHPUnit\Framework\TestCase
             $validator->check();
         } catch (ProcessException $e) {
             $this->assertEquals(
-                'Param name currency with value AAAAA doesnt match regular expression ^[A-Z]{3}$', $e->getMessage()
+                'Param name currency with value AAAAA doesnt match regular expression ^[A-Z]{3}$',
+                $e->getMessage()
             );
         }
 

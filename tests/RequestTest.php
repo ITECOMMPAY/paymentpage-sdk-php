@@ -41,56 +41,56 @@ class RequestTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertEquals(
             'ecommpay\Request\Sale',
-            get_class(Request::get(Request::PAYMENT_CARD_SALE,
-            $this->params)));
+            get_class(Request::get(Request::PAYMENT_CARD_SALE, $this->params))
+        );
     }
 
     public function testGetAuth()
     {
         $this->assertEquals(
             'ecommpay\Request\Auth',
-            get_class(Request::get(Request::PAYMENT_CARD_AUTH,
-            $this->params)));
+            get_class(Request::get(Request::PAYMENT_CARD_AUTH, $this->params))
+        );
     }
 
     public function testGetRefund()
     {
         $this->assertEquals(
             'ecommpay\Request\Refund',
-            get_class(Request::get(Request::PAYMENT_CARD_REFUND,
-            $this->params)));
+            get_class(Request::get(Request::PAYMENT_CARD_REFUND, $this->params))
+        );
     }
 
     public function testGetPaymentStatus()
     {
         $this->assertEquals(
             'ecommpay\Request\PaymentStatus',
-            get_class(Request::get(Request::PAYMENT_STATUS,
-            $this->params)));
+            get_class(Request::get(Request::PAYMENT_STATUS, $this->params))
+        );
     }
 
     public function testGetCancel()
     {
         $this->assertEquals(
             'ecommpay\Request\Cancel',
-            get_class(Request::get(Request::PAYMENT_CARD_CANCEL,
-            $this->params)));
+            get_class(Request::get(Request::PAYMENT_CARD_CANCEL, $this->params))
+        );
     }
 
     public function testGetCapture()
     {
         $this->assertEquals(
             'ecommpay\Request\Capture',
-            get_class(Request::get(Request::PAYMENT_CARD_CAPTURE,
-            $this->params)));
+            get_class(Request::get(Request::PAYMENT_CARD_CAPTURE, $this->params))
+        );
     }
 
     public function testGetComplete()
     {
         $this->assertEquals(
             'ecommpay\Request\Complete',
-            get_class(Request::get(Request::PAYMENT_CARD_COMPLETE,
-            $this->params)));
+            get_class(Request::get(Request::PAYMENT_CARD_COMPLETE, $this->params))
+        );
     }
 
     public function testUnknownAction()
