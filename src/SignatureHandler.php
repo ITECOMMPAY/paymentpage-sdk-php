@@ -64,19 +64,15 @@ class SignatureHandler
      *
      * @return array
      */
-    private function getParamsToSign(array $params, array $ignoreParamKeys = [], $currentLevel = 1, $prefix = '')
+    private function getParamsToSign(array $params, array $ignoreParamKeys = [], $prefix = '', $sort = true)
     {
         $paramsToSign = [];
 
         foreach ($params as $key => $value) {
             $paramKey = ($prefix ? $prefix . ':' : '') . $key;
             if (is_array($value)) {
-                if ($currentLevel >= self::MAXIMUM_RECURSION_DEPTH) {
-                    $paramsToSign[$paramKey] = $paramKey . ':';
-                } else {
-                    $subArray = $this->getParamsToSign($value, $ignoreParamKeys, $currentLevel + 1, $paramKey);
-                    $paramsToSign = array_merge($paramsToSign, $subArray);
-                }
+                $subArray = $this->getParamsToSign($value, $ignoreParamKeys, $paramKey, false);
+                $paramsToSign = array_merge($paramsToSign, $subArray);
             } else {
                 if (is_bool($value)) {
                     $value = $value ? '1' : '0';
@@ -88,7 +84,7 @@ class SignatureHandler
             }
         }
 
-        if ($currentLevel === 1) {
+        if ($sort) {
             ksort($paramsToSign, SORT_NATURAL);
         }
 
