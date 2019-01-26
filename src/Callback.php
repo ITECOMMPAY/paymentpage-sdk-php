@@ -87,9 +87,9 @@ class Callback
     private $signatureHandler;
 
     /**
-     *
      * @param string $data RAW data from gate
      * @param SignatureHandler $signatureHandler
+     *
      * @throws ProcessException
      */
     public function __construct($data, $signatureHandler)
@@ -200,7 +200,7 @@ class Callback
     }
 
     /**
-     * Unset param at callback adata
+     * Unset param at callback data
      *
      * @param string $name param name
      * @param array $data tmp data

@@ -35,6 +35,7 @@ class SignatureHandler
      *
      * @param array $params
      * @param string $signature
+     *
      * @return boolean
      */
     public function check(array $params, $signature): bool
@@ -46,6 +47,7 @@ class SignatureHandler
      * Return signature
      *
      * @param array $params
+     *
      * @return string
      */
     public function sign(array $params): string
@@ -59,8 +61,8 @@ class SignatureHandler
      *
      * @param array $params
      * @param array $ignoreParamKeys
-     * @param int $currentLevel
      * @param string $prefix
+     * @param bool $sort
      *
      * @return array
      */

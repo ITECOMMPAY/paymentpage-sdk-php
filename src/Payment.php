@@ -81,6 +81,9 @@ class Payment
      */
     private $params;
 
+    /**
+     * @param int|string $projectId
+     */
     public function __construct(string $projectId)
     {
         $this->params = [
@@ -115,6 +118,7 @@ class Payment
      * A range of predefined amounts that are available for selection by the customer.
      *
      * @param array $amounts
+     *
      * @return Payment
      */
     public function setCashierPredefinedAmounts(array $amounts): Payment
@@ -127,7 +131,7 @@ class Payment
     public function __call($name, $arguments)
     {
         if (strpos($name, 'set') === 0) {
-            // convert 'setAccountToken' to 'account_token'
+            // convert 'setAccountToken' -> 'AccountToken' -> 'accountToken' -> 'account_token'
             $key = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', lcfirst(substr($name, 3))));
             $this->params[$key] = $arguments[0];
             return $this;
