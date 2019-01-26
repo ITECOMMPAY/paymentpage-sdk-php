@@ -25,4 +25,19 @@ class PaymentPageTest extends \PHPUnit\Framework\TestCase
             $url
         );
     }
+
+    public function testOtherBaseUrl()
+    {
+        $handler = new SignatureHandler('secret');
+        $paymentPage = new PaymentPage($handler, 'example.com');
+
+        $payment = new Payment(1);
+        $url = $paymentPage->getUrl($payment);
+
+        self::assertEquals(
+            'example.com?project_id=1&signature=' .
+            'BsO4%2FAiBCOC65cx%2BlNImPe0achU8Peqn6bIHpSR6X%2BH2PKva5HuOttm1%2BlVrp5YGTUC3PS%2Bdh6YyokEyd%2FcOtw%3D%3D',
+            $url
+        );
+    }
 }
