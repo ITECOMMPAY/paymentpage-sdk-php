@@ -89,6 +89,7 @@ class Callback
     /**
      * @param string|array $data RAW or already processed data from gate
      * @param SignatureHandler $signatureHandler
+     *
      * @throws ProcessException
      */
     public function __construct($data, $signatureHandler)
@@ -206,11 +207,12 @@ class Callback
         $data = $this->data;
         $signature = $this->getSignature();
         $this->removeParam('signature', $data);
+
         return $this->signatureHandler->check($data, $signature);
     }
 
     /**
-     * Unset param at callback adata
+     * Unset param at callback data
      *
      * @param string $name param name
      * @param array $data tmp data
