@@ -43,7 +43,9 @@ class PaymentPage
      */
     public function getUrl(Payment $payment): string
     {
-        return $this->baseUrl . '?'. http_build_query(array_map('urlencode', $payment->getParams())) . '&signature=' .
-            urlencode($this->signatureHandler->sign($payment->getParams()));
+        $params = $payment->getParams();
+        $params['signature'] = $this->signatureHandler->sign($params);
+
+        return $this->baseUrl . '?' . http_build_query(array_map('urlencode', $params));
     }
 }
