@@ -2,9 +2,9 @@
 
 namespace ecommpay\tests;
 
+use ecommpay\Payment;
 use ecommpay\PaymentPage;
 use ecommpay\SignatureHandler;
-use ecommpay\Payment;
 
 class PaymentPageTest extends \PHPUnit\Framework\TestCase
 {
@@ -13,13 +13,15 @@ class PaymentPageTest extends \PHPUnit\Framework\TestCase
     {
         $handler = new SignatureHandler('secret');
         $paymentPage = new PaymentPage($handler);
+
         $payment = new Payment(100);
-        $payment->setPaymentDescription('B&W');
+        $payment->setPaymentDescription('B&W purchase');
         $url = $paymentPage->getUrl($payment);
 
+        $signature = urlencode($handler->sign($payment->getParams()));
         self::assertEquals(
-            'https://paymentpage.ecommpay.com/payment?project_id=100&payment_description=B%2526W' .
-            '&signature=X9rP65p71v5vteLWHBroNr5NE1GrqBu%2FjyFKk7BhZVgtPIFiO3iquKIAPtKkuSD7htuWiLp8DRyfL4H9vT5d3A%3D%3D',
+            'https://paymentpage.ecommpay.com/payment?project_id=100&payment_description=B%26W+purchase' .
+            '&signature=' . $signature,
             $url
         );
     }
