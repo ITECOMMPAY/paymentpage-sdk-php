@@ -66,7 +66,7 @@ class SignatureHandler
      *
      * @return array
      */
-    private function getParamsToSign(array $params, array $ignoreParamKeys = [], $prefix = '', $sort = true)
+    private function getParamsToSign(array $params, array $ignoreParamKeys = [], $prefix = '', $sort = true): array
     {
         $paramsToSign = [];
 
