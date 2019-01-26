@@ -46,6 +46,6 @@ class PaymentPage
         $params = $payment->getParams();
         $params['signature'] = $this->signatureHandler->sign($params);
 
-        return $this->baseUrl . '?' . http_build_query(array_map('urlencode', $params));
+        return $this->baseUrl . '?' . http_build_query($params);
     }
 }
