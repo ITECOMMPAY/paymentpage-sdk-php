@@ -53,6 +53,7 @@ class SignatureHandler
     public function sign(array $params): string
     {
         $stringToSign = implode(self::ITEMS_DELIMITER, $this->getParamsToSign($params));
+
         return base64_encode(hash_hmac(self::ALGORITHM, $stringToSign, $this->secretKey, true));
     }
 

@@ -111,6 +111,7 @@ class Payment
     public function setBestBefore(\DateTime $time): Payment
     {
         $this->params['best_before'] = $time->format('r');
+
         return $this;
     }
 
@@ -134,8 +135,10 @@ class Payment
             // convert 'setAccountToken' -> 'AccountToken' -> 'accountToken' -> 'account_token'
             $key = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', lcfirst(substr($name, 3))));
             $this->params[$key] = $arguments[0];
+
             return $this;
         }
+
         throw new \BadMethodCallException('Bad method call');
     }
 }

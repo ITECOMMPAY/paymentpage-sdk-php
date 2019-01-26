@@ -196,6 +196,7 @@ class Callback
         $data = $this->data;
         $signature = $this->getSignature();
         $this->removeParam('signature', $data);
+
         return $this->signatureHandler->check($data['body'], $signature);
     }
 
