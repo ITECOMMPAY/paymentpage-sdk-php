@@ -9,7 +9,8 @@ namespace ecommpay;
  */
 class SignatureHandler
 {
-    const ITEMS_DELIMITER = ';';
+    const KEY_DELIMITER = ':'; // delimiter between key and value or in composite keys
+    const ITEMS_DELIMITER = ';'; // delimiter between each parameter
     const ALGORITHM = 'sha512';
     const MAXIMUM_RECURSION_DEPTH = 3;
 
@@ -21,6 +22,18 @@ class SignatureHandler
     private $secretKey;
 
     /**
+     * Set of parameter`s keys that would be skipped while hashing.
+     *
+     * Example:
+     * ```php
+     * ['signature', 'user:private_data'];
+     * ```
+     *
+     * @var string[]
+     */
+    private $ignoredKeys = [];
+
+    /**
      * __construct
      *
      * @param string $secretKey
@@ -28,6 +41,19 @@ class SignatureHandler
     public function __construct($secretKey)
     {
         $this->secretKey = $secretKey;
+    }
+
+    /**
+     * @see $ignoredKeys
+     * @param string[] $ignoredKeys
+     *
+     * @return self
+     */
+    public function setIgnoredKeys(array $ignoredKeys): self
+    {
+        $this->ignoredKeys = $ignoredKeys;
+
+        return $this;
     }
 
     /**
@@ -52,45 +78,68 @@ class SignatureHandler
      */
     public function sign(array $params): string
     {
-        $stringToSign = implode(self::ITEMS_DELIMITER, $this->getParamsToSign($params));
-
-        return base64_encode(hash_hmac(self::ALGORITHM, $stringToSign, $this->secretKey, true));
+        return $this->getSignature($this->getParamsStamp($params));
     }
 
     /**
-     * Get parameters to sign
+     * @param string $paramsString
      *
-     * @param array $params
-     * @param array $ignoreParamKeys
-     * @param string $prefix
-     * @param bool $sort
-     *
-     * @return array
+     * @return string
      */
-    private function getParamsToSign(array $params, array $ignoreParamKeys = [], $prefix = '', $sort = true): array
+    private function getSignature(string $paramsString): string
     {
-        $paramsToSign = [];
+        $signHash = hash_hmac(self::ALGORITHM, $paramsString, $this->secretKey, true);
 
+        return base64_encode($signHash);
+    }
+
+    private function getParamsStamp(array $params): string
+    {
+        $paramsToSign = $this->flattenParamsArray($params);
+
+        ksort($paramsToSign, SORT_NATURAL);
+
+        return implode(self::ITEMS_DELIMITER, $paramsToSign);
+    }
+
+    private function flattenParamsArray(array $params, string $prefix = '', int $depth = 1): array
+    {
+        $prefix = $prefix ? $prefix . self::KEY_DELIMITER : '';
+
+        if ($depth > self::MAXIMUM_RECURSION_DEPTH) {
+            return [$prefix];
+        }
+
+        $flatten = [];
         foreach ($params as $key => $value) {
-            $paramKey = ($prefix ? $prefix . ':' : '') . $key;
-            if (is_array($value)) {
-                $subArray = $this->getParamsToSign($value, $ignoreParamKeys, $paramKey, false);
-                $paramsToSign = array_merge($paramsToSign, $subArray);
-            } else {
-                if (is_bool($value)) {
-                    $value = $value ? '1' : '0';
-                } else {
-                    $value = (string)$value;
-                }
+            $key = $prefix . strtolower($key);
+            if (in_array($key, $this->ignoredKeys, true)) {
+                continue;
+            }
 
-                $paramsToSign[$paramKey] = $paramKey . ':' . $value;
+            if (is_array($value)) {
+                $subArray = $this->flattenParamsArray($value, $key, $depth + 1);
+                $flatten = array_merge($flatten, $subArray);
+            } else {
+                $value = $this->stringifyParamValue($value);
+                $flatten[$key] = $key . self::KEY_DELIMITER . $value;
             }
         }
 
-        if ($sort) {
-            ksort($paramsToSign, SORT_NATURAL);
+        return $flatten;
+    }
+
+    /**
+     * @param $value
+     *
+     * @return string
+     */
+    private function stringifyParamValue($value): string
+    {
+        if (is_bool($value)) {
+            return $value ? '1' : '0';
         }
 
-        return $paramsToSign;
+        return (string)$value;
     }
 }
