@@ -47,8 +47,41 @@ class SignatureHandlerTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    public function testDeepSign()
+    {
+        $data = [
+            'customer' => [
+                'address' => [
+                    'position' => [
+                        'geo' => [
+                            'latitude' => 10,
+                            'longitude' => 20,
+                        ],
+                        'relative' => '1 km away',
+                    ],
+                    'ZIP code' => 123312,
+                ],
+                'id' => 1,
+            ],
+            'payment' => 0,
+        ];
+
+        $expected = 'customer:address:position:;customer:address:zip code:123312;customer:id:1;payment:0';
+        $actual = self::callProtectedMethod($this->handler, 'getParamsStamp', [$data]);
+
+        self::assertEquals($expected, $actual);
+    }
+
     public function testCheck()
     {
         self::assertTrue($this->handler->check($this->data, $this->signature));
+    }
+
+    private static function callProtectedMethod($obj, $name, array $args)
+    {
+        $class = new \ReflectionClass($obj);
+        $method = $class->getMethod($name);
+        $method->setAccessible(true);
+        return $method->invokeArgs($obj, $args);
     }
 }
