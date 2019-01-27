@@ -35,6 +35,22 @@ class Gate
     }
 
     /**
+     * @return PaymentPage
+     */
+    public function getPaymentPageBuilder(): PaymentPage
+    {
+        return $this->paymentPageUrlBuilder;
+    }
+
+    /**
+     * @return SignatureHandler
+     */
+    public function getSignatureHandler(): SignatureHandler
+    {
+        return $this->signatureHandler;
+    }
+
+    /**
      * Get URL for purchase payment page
      *
      * @param Payment $payment Payment object

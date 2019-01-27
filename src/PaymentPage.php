@@ -35,6 +35,14 @@ class PaymentPage
     }
 
     /**
+     * @param string $baseUrl
+     */
+    public function setBaseUrl(string $baseUrl)
+    {
+        $this->baseUrl = $baseUrl;
+    }
+
+    /**
      * Get full URL for payment
      *
      * @param Payment $payment
