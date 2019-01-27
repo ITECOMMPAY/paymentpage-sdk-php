@@ -102,11 +102,11 @@ class SignatureHandler
         return implode(self::ITEMS_DELIMITER, $paramsToSign);
     }
 
-    private function flattenParamsArray(array $params, string $prefix = '', int $depth = 1): array
+    private function flattenParamsArray(array $params, string $prefix = '', int $depth = 0): array
     {
         $prefix = $prefix ? $prefix . self::KEY_DELIMITER : '';
 
-        if ($depth > self::MAXIMUM_RECURSION_DEPTH) {
+        if ($depth >= self::MAXIMUM_RECURSION_DEPTH) {
             return [$prefix];
         }
 
