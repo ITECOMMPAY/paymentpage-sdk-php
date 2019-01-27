@@ -40,4 +40,21 @@ class PaymentPageTest extends \PHPUnit\Framework\TestCase
             $url
         );
     }
+
+    public function testSetBaseUrl()
+    {
+        $testDomain = 'example.com';
+
+        $payment = new Payment(1);
+        $handler = new SignatureHandler('secret');
+        $paymentPageValid = new PaymentPage($handler, $testDomain);
+
+        $paymentPageTest = new PaymentPage($handler);
+        $paymentPageTest->setBaseUrl($testDomain);
+
+        self::assertEquals(
+            $paymentPageValid->getUrl($payment),
+            $paymentPageTest->getUrl($payment)
+        );
+    }
 }
