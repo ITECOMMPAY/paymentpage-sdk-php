@@ -26,6 +26,23 @@ class PaymentPageTest extends \PHPUnit\Framework\TestCase
         );
     }
 
+    public function testSignSideEffects()
+    {
+        $handler = new SignatureHandler('secret');
+        $paymentPage = new PaymentPage($handler);
+
+        $payment = new Payment(1);
+
+        $data1 = $this->arrayDeepCopy($payment->getParams());
+        $url1 = $paymentPage->getUrl($payment);
+
+        $data2 = $this->arrayDeepCopy($payment->getParams());
+        $url2 = $paymentPage->getUrl($payment);
+
+        self::assertEquals($data1, $data2);
+        self::assertEquals($url1, $url2);
+    }
+
     public function testOtherBaseUrl()
     {
         $handler = new SignatureHandler('secret');
@@ -56,5 +73,14 @@ class PaymentPageTest extends \PHPUnit\Framework\TestCase
             $paymentPageValid->getUrl($payment),
             $paymentPageTest->getUrl($payment)
         );
+    }
+
+    /**
+     * @param array $arr
+     * @return array
+     */
+    private function arrayDeepCopy(array $arr): array
+    {
+        return unserialize(serialize($arr));
     }
 }
