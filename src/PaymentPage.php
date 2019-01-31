@@ -54,6 +54,6 @@ class PaymentPage
         $params = $payment->getParams();
         $params['signature'] = $this->signatureHandler->sign($params);
 
-        return $this->baseUrl . '?' . http_build_query($params);
+        return $this->baseUrl . '?' . http_build_query($params, null, '&', PHP_QUERY_RFC3986);
     }
 }

@@ -20,7 +20,7 @@ class PaymentPageTest extends \PHPUnit\Framework\TestCase
 
         $signature = urlencode($handler->sign($payment->getParams()));
         self::assertEquals(
-            'https://paymentpage.ecommpay.com/payment?project_id=100&payment_description=B%26W+purchase' .
+            'https://paymentpage.ecommpay.com/payment?project_id=100&payment_description=B%26W%20purchase' .
             '&signature=' . $signature,
             $url
         );
