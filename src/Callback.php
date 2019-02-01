@@ -87,7 +87,6 @@ class Callback
     private $signatureHandler;
 
     /**
-     *
      * @param string|array $data RAW or already processed data from gate
      * @param SignatureHandler $signatureHandler
      * @throws ProcessException
@@ -96,9 +95,20 @@ class Callback
     {
         $this->data = is_array($data) ? $data : $this->toArray($data);
         $this->signatureHandler = $signatureHandler;
+
         if (!$this->checkSignature()) {
             throw new ProcessException("Signature {$this->getSignature()} is invalid");
         }
+    }
+
+    /**
+     * Returns already parsed gate data
+     *
+     * @return array
+     */
+    public function getData(): array
+    {
+        return $this->data;
     }
 
     /**
