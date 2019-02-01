@@ -86,13 +86,13 @@ class Callback
      */
     private $signatureHandler;
 
-	/**
-	 *
-	 * @param string|array $data RAW or already processed data from gate
-	 * @param SignatureHandler $signatureHandler
-	 * @throws ProcessException
-	 */
-	 public function __construct($data, $signatureHandler)
+    /**
+     *
+     * @param string|array $data RAW or already processed data from gate
+     * @param SignatureHandler $signatureHandler
+     * @throws ProcessException
+     */
+    public function __construct($data, $signatureHandler)
     {
         $this->data = is_array($data) ? $data : $this->toArray($data);
         $this->signatureHandler = $signatureHandler;
