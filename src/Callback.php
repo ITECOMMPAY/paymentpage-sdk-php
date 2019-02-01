@@ -23,7 +23,7 @@ class Callback
 
     /**
      *
-     * @param string|array $data RAW data from gate
+     * @param string|array $data RAW or already processed data from gate
      * @param SignatureHandler $signatureHandler
      * @throws ProcessException
      */
