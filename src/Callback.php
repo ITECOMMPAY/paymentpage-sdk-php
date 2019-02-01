@@ -227,4 +227,13 @@ class Callback
             }
         }
     }
+
+    /**
+     * Reads input data from gate
+     * @return string
+     */
+    public static function readData(): string
+    {
+        return file_get_contents('php://input') ?: '{}';
+    }
 }
