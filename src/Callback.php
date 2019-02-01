@@ -88,13 +88,13 @@ class Callback
 
     /**
      *
-     * @param string $data RAW data from gate
+     * @param string|array $data RAW data from gate
      * @param SignatureHandler $signatureHandler
      * @throws ProcessException
      */
     public function __construct($data, $signatureHandler)
     {
-        $this->data = $this->toArray($data);
+        $this->data = is_array($data) ? $data : $this->toArray($data);
         $this->signatureHandler = $signatureHandler;
         if (!$this->checkSignature()) {
             throw new ProcessException("Signature {$this->getSignature()} is invalid");
