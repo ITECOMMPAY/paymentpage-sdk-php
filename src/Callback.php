@@ -87,18 +87,28 @@ class Callback
     private $signatureHandler;
 
     /**
-     *
-     * @param string $data RAW data from gate
+     * @param string|array $data RAW or already processed data from gate
      * @param SignatureHandler $signatureHandler
      * @throws ProcessException
      */
     public function __construct($data, $signatureHandler)
     {
-        $this->data = $this->toArray($data);
+        $this->data = is_array($data) ? $data : $this->toArray($data);
         $this->signatureHandler = $signatureHandler;
+
         if (!$this->checkSignature()) {
             throw new ProcessException("Signature {$this->getSignature()} is invalid");
         }
+    }
+
+    /**
+     * Returns already parsed gate data
+     *
+     * @return array
+     */
+    public function getData(): array
+    {
+        return $this->data;
     }
 
     /**
@@ -216,5 +226,14 @@ class Callback
                 $this->removeParam($name, $val);
             }
         }
+    }
+
+    /**
+     * Reads input data from gate
+     * @return string
+     */
+    public static function readData(): string
+    {
+        return file_get_contents('php://input') ?: '{}';
     }
 }
