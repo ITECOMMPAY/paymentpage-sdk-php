@@ -81,10 +81,11 @@ class Payment
      */
     private $params;
 
-    public function __construct(string $projectId)
+    public function __construct(string $projectId, string $paymentId)
     {
         $this->params = [
             'project_id' => $projectId,
+            'payment_id' => $paymentId,
         ];
     }
 

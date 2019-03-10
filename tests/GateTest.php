@@ -20,7 +20,7 @@ class GateTest extends \PHPUnit\Framework\TestCase
 
     public function testGetPurchasePaymentPageUrl()
     {
-        self::assertNotEmpty($this->gate->getPurchasePaymentPageUrl(new Payment(100)));
+        self::assertNotEmpty($this->gate->getPurchasePaymentPageUrl(new Payment(100, 'test payment id')));
     }
 
     public function testHandleCallback()
