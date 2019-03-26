@@ -24,7 +24,7 @@ composer require ecommpay/paymentpage-sdk
 
 ```php
 $gate = new ecommpay\Gate('secret');
-$payment = new ecommpay\Payment(100);
+$payment = new ecommpay\Payment('11', 'some payment id');
 $payment->setPaymentAmount(1000)->setPaymentCurrency('RUB');
 $url = $gate->getPurchasePaymentPageUrl($payment);
 ``` 
