@@ -13,6 +13,7 @@ class PaymentTest extends \PHPUnit\Framework\TestCase
         $expected = [
             'project_id' => '100',
             'payment_id' => 'test payment id',
+            'interface_type' => json_encode(Payment::getInterfaceType()),
         ];
         self::assertEquals($expected, $payment->getParams());
     }
@@ -40,5 +41,12 @@ class PaymentTest extends \PHPUnit\Framework\TestCase
         self::assertEquals('type', $payment->getParams()['card_operation_type']);
         self::expectException(\BadMethodCallException::class);
         $payment->nonExistantMethod();
+    }
+
+    public function testSetInterfaceType()
+    {
+        $payment = new Payment(100, 'test payment id');
+        self::expectException(\BadMethodCallException::class);
+        $payment->setInterfaceType(123);
     }
 }
