@@ -76,16 +76,33 @@ class Payment
      */
     const RECURRING_TYPE = 'recurring';
 
+    const IGNORED_KEYS = [
+        'interface_type',
+    ];
+
+    const INTERFACE_TYPE = 23;
+
     /**
      * @var array Payment parameters
      */
     private $params;
+
+    /**
+     * @return array
+     */
+    public static function getInterfaceType(): array
+    {
+        return [
+            'id' => self::INTERFACE_TYPE,
+        ];
+    }
 
     public function __construct(string $projectId, string $paymentId)
     {
         $this->params = [
             'project_id' => $projectId,
             'payment_id' => $paymentId,
+            'interface_type' => json_encode(self::getInterfaceType()),
         ];
     }
 
@@ -130,8 +147,11 @@ class Payment
         if (strpos($name, 'set') === 0) {
             // convert 'setAccountToken' to 'account_token'
             $key = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', lcfirst(substr($name, 3))));
-            $this->params[$key] = $arguments[0];
-            return $this;
+
+            if (!in_array($key, self::IGNORED_KEYS)) {
+                $this->params[$key] = $arguments[0];
+                return $this;
+            }
         }
         throw new \BadMethodCallException('Bad method call');
     }
