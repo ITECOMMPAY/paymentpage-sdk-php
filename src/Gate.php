@@ -29,7 +29,7 @@ class Gate
      * Gate constructor.
      *
      * @param string $secret Secret key
-     * @param string $baseUrl
+     * @param string $baseUrl Base URL for concatenate with payment params
      */
     public function __construct($secret, string $baseUrl = '')
     {

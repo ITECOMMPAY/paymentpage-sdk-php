@@ -91,7 +91,7 @@ class Callback
      * @param SignatureHandler $signatureHandler
      * @throws ProcessException
      */
-    public function __construct(string $data, SignatureHandler $signatureHandler)
+    public function __construct($data, SignatureHandler $signatureHandler)
     {
         $this->data = is_array($data) ? $data : $this->toArray($data);
         $this->signatureHandler = $signatureHandler;
