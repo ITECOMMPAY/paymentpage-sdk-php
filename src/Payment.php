@@ -76,10 +76,6 @@ class Payment
      */
     const RECURRING_TYPE = 'recurring';
 
-    const IGNORED_KEYS = [
-        'interface_type',
-    ];
-
     const INTERFACE_TYPE = 23;
 
     /**
@@ -87,22 +83,12 @@ class Payment
      */
     private $params;
 
-    /**
-     * @return array
-     */
-    public static function getInterfaceType(): array
-    {
-        return [
-            'id' => self::INTERFACE_TYPE,
-        ];
-    }
-
     public function __construct(string $projectId, string $paymentId)
     {
         $this->params = [
             'project_id' => $projectId,
             'payment_id' => $paymentId,
-            'interface_type' => json_encode(self::getInterfaceType()),
+            'interface_type' => json_encode(['id' => self::INTERFACE_TYPE]),
         ];
     }
 
@@ -142,17 +128,26 @@ class Payment
         return $this;
     }
 
+    /**
+     * Setter for payment's params, cuts prefix 'set'
+     * and convert Pascal case to Snake case,
+     * for example: 'setAccountToken'
+     * will be converted to 'account_token'.
+     * If prefix not found, then throws exception.
+     *
+     * @param $name
+     * @param $arguments
+     * @return $this
+     */
     public function __call($name, $arguments)
     {
         if (strpos($name, 'set') === 0) {
-            // convert 'setAccountToken' to 'account_token'
             $key = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', lcfirst(substr($name, 3))));
+            $this->params[$key] = $arguments[0];
 
-            if (!in_array($key, self::IGNORED_KEYS)) {
-                $this->params[$key] = $arguments[0];
-                return $this;
-            }
+            return $this;
         }
+
         throw new \BadMethodCallException('Bad method call');
     }
 }
