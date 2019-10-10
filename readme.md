@@ -31,6 +31,15 @@ $url = $gate->getPurchasePaymentPageUrl($payment);
 
 `$url` here is the signed URL.
 
+If you want to use another domain for URL you can change it with optional `Gate` constructor parameter:
+```php
+new ecommpay\Gate('secret', 'https://mydomain.com/payment');
+```
+or change it with method 
+```php
+$gate->setPaymentBaseUrl('https://mydomain.com/payment');
+```
+
 ### Handle callback from Ecommpay
 
 You'll need to autoload this code in order to handle notifications:
