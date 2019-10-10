@@ -29,9 +29,20 @@ class PaymentPage
     {
         $this->signatureHandler = $signatureHandler;
 
+        $this->setBaseUrl($baseUrl);
+    }
+
+    /**
+     * @param string $baseUrl
+     * @return $this
+     */
+    public function setBaseUrl(string $baseUrl): self
+    {
         if ($baseUrl) {
             $this->baseUrl = $baseUrl;
         }
+
+        return $this;
     }
 
     /**

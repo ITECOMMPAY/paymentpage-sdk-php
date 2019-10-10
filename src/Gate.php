@@ -26,12 +26,26 @@ class Gate
     private $signatureHandler;
 
     /**
+     * Gate constructor.
+     *
      * @param string $secret Secret key
+     * @param string $baseUrl Base URL for concatenate with payment params
      */
-    public function __construct($secret)
+    public function __construct($secret, string $baseUrl = '')
     {
         $this->signatureHandler = new SignatureHandler($secret);
-        $this->paymentPageUrlBuilder = new PaymentPage($this->signatureHandler);
+        $this->paymentPageUrlBuilder = new PaymentPage($this->signatureHandler, $baseUrl);
+    }
+
+    /**
+     * @param string $paymentBaseUrl
+     * @return Gate
+     */
+    public function setPaymentBaseUrl(string $paymentBaseUrl = ''): self
+    {
+        $this->paymentPageUrlBuilder->setBaseUrl($paymentBaseUrl);
+
+        return $this;
     }
 
     /**
@@ -55,7 +69,7 @@ class Gate
      *
      * @throws ProcessException
      */
-    public function handleCallback($data): Callback
+    public function handleCallback(string $data): Callback
     {
         return new Callback($data, $this->signatureHandler);
     }
