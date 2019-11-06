@@ -21,7 +21,8 @@ class SignatureHandlerTest extends \PHPUnit\Framework\TestCase
             'card_holder' => 'John Smith',
             'cvv' => '123',
             'save' => true,
-        ]
+        ],
+        'frame_mode' => 'popup',
     ];
 
     /**

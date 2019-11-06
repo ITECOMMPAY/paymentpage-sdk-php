@@ -11,7 +11,7 @@ class SignatureHandler
 {
     const ITEMS_DELIMITER = ';';
     const ALGORITHM = 'sha512';
-    const MAXIMUM_RECURSION_DEPTH = 3;
+    const IGNORED_KEYS = ['frame_mode'];
 
     /**
      * Secret key
@@ -50,7 +50,7 @@ class SignatureHandler
      */
     public function sign(array $params): string
     {
-        $stringToSign = implode(self::ITEMS_DELIMITER, $this->getParamsToSign($params));
+        $stringToSign = implode(self::ITEMS_DELIMITER, $this->getParamsToSign($params, self::IGNORED_KEYS));
         return base64_encode(hash_hmac(self::ALGORITHM, $stringToSign, $this->secretKey, true));
     }
 
@@ -59,9 +59,9 @@ class SignatureHandler
      *
      * @param array $params
      * @param array $ignoreParamKeys
-     * @param int $currentLevel
      * @param string $prefix
-     *
+     * @param bool $sort
+
      * @return array
      */
     private function getParamsToSign(array $params, array $ignoreParamKeys = [], $prefix = '', $sort = true)
@@ -69,6 +69,10 @@ class SignatureHandler
         $paramsToSign = [];
 
         foreach ($params as $key => $value) {
+            if (\in_array($key, $ignoreParamKeys, true)) {
+                continue;
+            }
+
             $paramKey = ($prefix ? $prefix . ':' : '') . $key;
             if (is_array($value)) {
                 $subArray = $this->getParamsToSign($value, $ignoreParamKeys, $paramKey, false);
