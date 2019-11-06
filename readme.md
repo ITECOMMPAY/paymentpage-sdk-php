@@ -1,6 +1,6 @@
 # EcommPay PHP SDK
 
-[![Build Status](https://travis-ci.org/ITECOMMPAY/paymentpage_sdk.svg?branch=master)](https://travis-ci.org/ITECOMMPAY/paymentpage_sdk)
+[![Build Status](https://travis-ci.org/ITECOMMPAY/paymentpage-sdk-php.svg?branch=master)](https://travis-ci.org/ITECOMMPAY/paymentpage-sdk-php)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/13f0385331642461cba7/test_coverage)](https://codeclimate.com/github/ITECOMMPAY/paymentpage_sdk/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/13f0385331642461cba7/maintainability)](https://codeclimate.com/github/ITECOMMPAY/paymentpage_sdk/maintainability)
 
