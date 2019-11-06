@@ -13,6 +13,7 @@ class PaymentTest extends \PHPUnit\Framework\TestCase
         $expected = [
             'project_id' => '100',
             'payment_id' => 'test payment id',
+            'interface_type' => json_encode(['id' => Payment::INTERFACE_TYPE]),
         ];
         self::assertEquals($expected, $payment->getParams());
     }
