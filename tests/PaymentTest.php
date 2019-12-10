@@ -18,13 +18,6 @@ class PaymentTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($expected, $payment->getParams());
     }
 
-    public function testSetCashierPredefinedAmounts()
-    {
-        $payment = new Payment(100, 'test payment id');
-        $payment->setCashierPredefinedAmounts([10, 20]);
-        self::assertEquals('10,20', $payment->getParams()['cashier_predefined_amounts']);
-    }
-
     public function testSetBestBefore()
     {
         $payment = new Payment(100, 'test payment id');
