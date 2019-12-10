@@ -10,11 +10,6 @@ namespace ecommpay;
  * phpcs:disable
  * @method $this setAccountToken(string $token):self The token of the bank card that will be used to perform a payment
  * @method $this setCardOperationType(string $type) Type of payment performed via payment card
- * @method $this setCashierDefaultMode(string $mode) The tab that is opened to customer when the payment page is opened
- * @method $this setCashierForceMode(string $mode) The only tab that is opened in the payment page
- * @method $this setCashierManualInput(bool $bool) Turning on or turning off the customer's ability to manually input amount of the payment or payout.
- * @method $this setCashierMaxValue(int $value) Maximum payment amount in minor unit of currency.
- * @method $this setCashierMinValue(int $value) Minimum payment amount in minor unit of currency.
  * @method $this setCloseOnMissclick(bool $bool) A parameter that specifies the action of the widget (opened in the modal window) when a customer clicks outside the widget area.
  * @method $this setCssModalWrap(string $wrap) An additional CSS class for a modal window.
  * @method $this setCustomerId(string $id) Unique ID of the customer in your project
@@ -57,6 +52,7 @@ namespace ecommpay;
  * @method $this setTerminalId(int $id) Unique ID of the Payment Page template which you want to run despite the regional and A/B test settings
  * @method $this setBaseurl(string $url) Basic Payment Page address that is used in case the Payment Page domain differs from the domain used to connect libraries or if merchant.js is not connected via the <script> tag
  * @method $this setPaymentExtraParam(string $param) Additional parameter to be forwarded to Gate
+ * @method $this setFrameMode(string $mode) Widget launch mode
  * phpcs:enable
  */
 class Payment
@@ -112,19 +108,6 @@ class Payment
     public function setBestBefore(\DateTime $time): Payment
     {
         $this->params['best_before'] = $time->format('r');
-        return $this;
-    }
-
-    /**
-     * A range of predefined amounts that are available for selection by the customer.
-     *
-     * @param array $amounts
-     * @return Payment
-     */
-    public function setCashierPredefinedAmounts(array $amounts): Payment
-    {
-        $this->params['cashier_predefined_amounts'] = implode(',', $amounts);
-
         return $this;
     }
 
