@@ -79,13 +79,22 @@ class Payment
      */
     private $params;
 
-    public function __construct(string $projectId, string $paymentId)
+    /**
+     * Payment constructor.
+     *
+     * @param string $projectId
+     * @param string|null $paymentId
+     */
+    public function __construct(string $projectId, string $paymentId = null)
     {
         $this->params = [
             'project_id' => $projectId,
-            'payment_id' => $paymentId,
             'interface_type' => json_encode(['id' => self::INTERFACE_TYPE]),
         ];
+
+        if ($paymentId) {
+            $this->params['payment_id'] = $paymentId;
+        }
     }
 
     /**

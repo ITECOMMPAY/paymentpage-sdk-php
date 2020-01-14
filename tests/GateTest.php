@@ -25,7 +25,8 @@ class GateTest extends \PHPUnit\Framework\TestCase
 
     public function testGetPurchasePaymentPageUrl()
     {
-        $paymentUrl = $this->gate->getPurchasePaymentPageUrl(new Payment(100, 'test payment id'));
+        $payment = (new Payment(100))->setPaymentId('test payment id');
+        $paymentUrl = $this->gate->getPurchasePaymentPageUrl($payment);
 
         self::assertNotEmpty($paymentUrl);
         self::assertStringStartsWith($this->testUrl, $paymentUrl);
@@ -37,7 +38,7 @@ class GateTest extends \PHPUnit\Framework\TestCase
 
         self::assertEquals(Gate::class, get_class($this->gate->setPaymentBaseUrl($someTestUrl)));
 
-        $paymentUrl = $this->gate->getPurchasePaymentPageUrl(new Payment(100, 'test payment id'));
+        $paymentUrl = $this->gate->getPurchasePaymentPageUrl(new Payment(100));
 
         self::assertStringStartsWith($someTestUrl, $paymentUrl);
     }

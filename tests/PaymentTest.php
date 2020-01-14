@@ -9,7 +9,7 @@ class PaymentTest extends \PHPUnit\Framework\TestCase
 
     public function testGetParams()
     {
-        $payment = new Payment(100, 'test payment id');
+        $payment = (new Payment(100))->setPaymentId('test payment id');
         $expected = [
             'project_id' => '100',
             'payment_id' => 'test payment id',
@@ -20,8 +20,11 @@ class PaymentTest extends \PHPUnit\Framework\TestCase
 
     public function testSetBestBefore()
     {
-        $payment = new Payment(100, 'test payment id');
-        $payment->setBestBefore(new \DateTime('2000-01-01 00:00:00 +0000'));
+        $payment = new Payment(100);
+
+        $payment
+            ->setPaymentId('test payment id')
+            ->setBestBefore(new \DateTime('2000-01-01 00:00:00 +0000'));
         self::assertEquals('Sat, 01 Jan 2000 00:00:00 +0000', $payment->getParams()['best_before']);
     }
 
