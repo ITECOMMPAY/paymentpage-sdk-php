@@ -63,13 +63,13 @@ class Gate
     /**
      * Callback handler
      *
-     * @param string $data RAW string data from Gate
+     * @param string|array $data
      *
      * @return Callback
      *
      * @throws ProcessException
      */
-    public function handleCallback(string $data): Callback
+    public function handleCallback($data): Callback
     {
         return new Callback($data, $this->signatureHandler);
     }
