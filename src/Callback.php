@@ -87,11 +87,6 @@ class Callback
     private $signatureHandler;
 
     /**
-     * @var string
-     */
-    private $signature;
-
-    /**
      * @param string|array $data RAW or already processed data from gate
      * @param SignatureHandler $signatureHandler
      * @throws ProcessException
@@ -154,18 +149,14 @@ class Callback
      */
     public function getSignature(): string
     {
-        if ($this->signature) {
-            return $this->signature;
-        }
-
-        $this->signature = $this->getValue('signature')
+        $signature = $this->getValue('signature')
             ?? $this->getValue('general.signature');
 
-        if (!$this->signature) {
+        if (!$signature) {
             throw new ProcessException('Undefined signature');
         }
 
-        return $this->signature;
+        return $signature;
     }
 
     /**
@@ -207,9 +198,7 @@ class Callback
                 return null;
             }
 
-            if (\is_array($value)) {
-                $callbackData = $value;
-            }
+            $callbackData = $value;
         }
 
         return $callbackData;
