@@ -12,7 +12,7 @@ $callback = [
         'period' => 'D',
         'time' => '11',
     ],
-    'signature' => 'AThqkBCZ6WZtY3WrMV28o7SM/vq6OIVF9qiVbELN4e/Ux59Lb5LFFnEuTq6bHa5pRvaPIkQGABXdpIrNLaeJdQ==',
+    'signature' => 'FJsgY7GfhWhhhLelZnpmeAkwQzdAvCDRaoENVoDEoBzgfbxUMLFnzMmX7O3RHWPSK1oWAD4D8tr2p5wUrSwSYA==',
 ];
 
 return json_encode($callback);
