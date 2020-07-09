@@ -152,7 +152,7 @@ class Callback
         $signature = $this->getValue('signature')
             ?? $this->getValue('general.signature');
 
-        if (!$signature) {
+        if ($signature === null) {
             throw new ProcessException('Undefined signature');
         }
 
