@@ -182,7 +182,7 @@ class Callback
     /**
      * Get value by name path
      *
-     * @param string $namePath
+     * @param string $namePath Path, delimited by dot (e.g.: "payment.status" or "customer.account.id")
      *
      * @return mixed
      */
