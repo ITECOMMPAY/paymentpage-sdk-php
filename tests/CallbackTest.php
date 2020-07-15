@@ -4,9 +4,15 @@ namespace ecommpay\tests;
 
 use ecommpay\Callback;
 use ecommpay\Gate;
+use ecommpay\ProcessException;
 
 class CallbackTest extends \PHPUnit\Framework\TestCase
 {
+    /**
+     * @var Gate
+     */
+    private $gate;
+
     /**
      * @var Callback
      */
@@ -14,8 +20,10 @@ class CallbackTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp()
     {
-        $this->callback = (new Gate('secret'))
-            ->handleCallback(require __DIR__ . '/data/callback.php');
+        $this->gate = new Gate('secret');
+        $this->callback =
+            $this->gate
+                ->handleCallback(require __DIR__ . '/data/callback.php');
     }
 
     public function testGetPaymentId()
@@ -37,5 +45,22 @@ class CallbackTest extends \PHPUnit\Framework\TestCase
     public function testGetPaymentStatus()
     {
         self::assertEquals('success', $this->callback->getPaymentStatus());
+    }
+
+    public function testGetUndefinedPayment()
+    {
+        $this->callback =
+            $this->gate
+                ->handleCallback(require __DIR__ . '/data/recurringCallback.php');
+        self::assertEquals(null, $this->callback->getPayment());
+    }
+
+    public function testUndefinedSign()
+    {
+        $this->expectException(ProcessException::class);
+        $this->expectExceptionMessage('Undefined signature');
+        $this->callback =
+            $this->gate
+                ->handleCallback(require __DIR__ . '/data/callbackWithoutSign.php');
     }
 }

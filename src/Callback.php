@@ -114,11 +114,11 @@ class Callback
     /**
      * Get payment info
      *
-     * @return mixed
+     * @return array|null
      */
     public function getPayment()
     {
-        return $this->getValueByName('payment');
+        return $this->getValue('payment');
     }
 
     /**
@@ -128,7 +128,7 @@ class Callback
      */
     public function getPaymentStatus(): string
     {
-        return $this->getValueByName('status', $this->getPayment());
+        return $this->getValue('payment.status');
     }
 
     /**
@@ -138,17 +138,25 @@ class Callback
      */
     public function getPaymentId(): string
     {
-        return $this->getValueByName('id', $this->getPayment());
+        return $this->getValue('payment.id');
     }
 
     /**
      * Get signature
      *
      * @return string
+     * @throws ProcessException
      */
     public function getSignature(): string
     {
-        return $this->getValueByName('signature');
+        $signature = $this->getValue('signature')
+            ?? $this->getValue('general.signature');
+
+        if ($signature === null) {
+            throw new ProcessException('Undefined signature');
+        }
+
+        return $signature;
     }
 
     /**
@@ -172,28 +180,28 @@ class Callback
     }
 
     /**
-     * Get value by name
+     * Get value by name path
      *
-     * @param string $name Param name
-     * @param array $data Data to search in
+     * @param string $namePath Path, delimited by dot (e.g.: "payment.status" or "customer.account.id")
      *
      * @return mixed
      */
-    private function getValueByName($name, array $data = [])
+    public function getValue(string $namePath)
     {
-        if (!$data) {
-            $data = $this->data;
-        }
+        $keys = explode('.', $namePath);
+        $callbackData = $this->data;
 
-        if (!array_key_exists($name, $data)) {
-            foreach ($data as $key => $value) {
-                if (\is_array($value)) {
-                    return $this->getValueByName($name, $value);
-                }
+        foreach ($keys as $key) {
+            $value = $callbackData[$key] ?? null;
+
+            if (is_null($value)) {
+                return null;
             }
+
+            $callbackData = $value;
         }
 
-        return $data[$name];
+        return $callbackData;
     }
 
     /**
