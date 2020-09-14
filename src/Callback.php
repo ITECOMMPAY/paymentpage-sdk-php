@@ -124,9 +124,9 @@ class Callback
     /**
      * Get payment status
      *
-     * @return string
+     * @return string|null
      */
-    public function getPaymentStatus(): string
+    public function getPaymentStatus()
     {
         return $this->getValue('payment.status');
     }
@@ -134,9 +134,9 @@ class Callback
     /**
      * Get payment ID
      *
-     * @return string
+     * @return string|null
      */
-    public function getPaymentId(): string
+    public function getPaymentId()
     {
         return $this->getValue('payment.id');
     }
