@@ -124,9 +124,9 @@ class Callback
     /**
      * Get payment status
      *
-     * @return string
+     * @return string|null
      */
-    public function getPaymentStatus(): string
+    public function getPaymentStatus()
     {
         return $this->getValue('payment.status');
     }
@@ -134,9 +134,9 @@ class Callback
     /**
      * Get payment ID
      *
-     * @return string
+     * @return string|null
      */
-    public function getPaymentId(): string
+    public function getPaymentId()
     {
         return $this->getValue('payment.id');
     }
@@ -152,7 +152,7 @@ class Callback
         $signature = $this->getValue('signature')
             ?? $this->getValue('general.signature');
 
-        if ($signature === null) {
+        if (!$signature) {
             throw new ProcessException('Undefined signature');
         }
 
@@ -182,7 +182,7 @@ class Callback
     /**
      * Get value by name path
      *
-     * @param string $namePath Path, delimited by dot (e.g.: "payment.status" or "customer.account.id")
+     * @param string $namePath
      *
      * @return mixed
      */
