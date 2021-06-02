@@ -12,6 +12,7 @@
         "psr-4": { "ecommpay\\": "src/" }
     },
     "require": {
+        "ext-openssl": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5||^7.2",

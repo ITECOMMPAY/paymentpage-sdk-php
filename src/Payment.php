@@ -53,6 +53,7 @@ namespace ecommpay;
  * @method $this setBaseurl(string $url) Basic Payment Page address that is used in case the Payment Page domain differs from the domain used to connect libraries or if merchant.js is not connected via the <script> tag
  * @method $this setPaymentExtraParam(string $param) Additional parameter to be forwarded to Gate
  * @method $this setFrameMode(string $mode) Widget launch mode
+ * @method string getProjectId():string Project id
  * phpcs:enable
  */
 class Payment
@@ -133,11 +134,16 @@ class Payment
      */
     public function __call($name, $arguments)
     {
+        $key = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', lcfirst(substr($name, 3))));
+
         if (strpos($name, 'set') === 0) {
-            $key = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', lcfirst(substr($name, 3))));
             $this->params[$key] = $arguments[0];
 
             return $this;
+        }
+
+        if (strpos($name, 'get') === 0) {
+            return $this->params[$key];
         }
 
         throw new \BadMethodCallException('Bad method call');

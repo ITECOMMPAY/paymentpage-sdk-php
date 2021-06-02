@@ -2,6 +2,8 @@
 
 namespace ecommpay;
 
+use Exception;
+
 /**
  * Gate
  */
@@ -30,11 +32,16 @@ class Gate
      *
      * @param string $secret Secret key
      * @param string $baseUrl Base URL for concatenate with payment params
+     * @param string $encryptSecret Secret key for encode URL path and params
      */
-    public function __construct($secret, string $baseUrl = '')
+    public function __construct(string $secret, string $baseUrl = '', string $encryptSecret = '')
     {
         $this->signatureHandler = new SignatureHandler($secret);
         $this->paymentPageUrlBuilder = new PaymentPage($this->signatureHandler, $baseUrl);
+
+        if ($encryptSecret) {
+            $this->paymentPageUrlBuilder->setEncryptor(new Encryptor($encryptSecret));
+        }
     }
 
     /**
@@ -54,6 +61,7 @@ class Gate
      * @param Payment $payment Payment object
      *
      * @return string
+     * @throws Exception
      */
     public function getPurchasePaymentPageUrl(Payment $payment): string
     {

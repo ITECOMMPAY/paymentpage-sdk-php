@@ -23,6 +23,15 @@ class GateTest extends \PHPUnit\Framework\TestCase
         $this->gate = new Gate('secret', $this->testUrl);
     }
 
+    public function testGetPurchasePaymentPageUrlEncrypted()
+    {
+        $this->gate = new Gate('test', '', 'qwerty');
+        $payment = (new Payment(402))->setPaymentId('test payment id');
+        $paymentUrl = $this->gate->getPurchasePaymentPageUrl($payment);
+
+        self::assertRegExp('/^https\:\/\/\w+\.\w+\.\w+\/\d+\/[\d\w\/\+=]+$/', $paymentUrl);
+    }
+
     public function testGetPurchasePaymentPageUrl()
     {
         $payment = (new Payment(100))->setPaymentId('test payment id');
@@ -34,7 +43,7 @@ class GateTest extends \PHPUnit\Framework\TestCase
 
     public function testSetPaymentBaseUrl()
     {
-        $someTestUrl = 'http://some-test-url.test/test';
+        $someTestUrl = 'http://some-test-url.test/test/payment';
 
         self::assertEquals(Gate::class, get_class($this->gate->setPaymentBaseUrl($someTestUrl)));
 

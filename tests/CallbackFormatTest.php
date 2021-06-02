@@ -19,12 +19,20 @@ class CallbackFormatTest extends \PHPUnit\Framework\TestCase
 
     public function testFormats()
     {
-        foreach ($this->cases as $callbackData) {
+        foreach ($this->cases['isset_payment'] as $callbackData) {
             $callback = (new Callback($callbackData, new SignatureHandler('123')));
 
-            $callback->getPayment();
-            $callback->getPaymentId();
+            self::assertNotEmpty($callback->getPayment());
+            self::assertNotEmpty($callback->getPaymentId());
             $callback->getPaymentStatus();
+        }
+
+        foreach ($this->cases['empty_payment'] as $callbackData) {
+            $callback = (new Callback($callbackData, new SignatureHandler('123')));
+
+            self::assertEmpty($callback->getPayment());
+            self::assertEmpty($callback->getPaymentId());
+            self::assertEmpty($callback->getPaymentStatus());
         }
     }
 }
