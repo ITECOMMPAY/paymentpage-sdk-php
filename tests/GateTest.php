@@ -29,7 +29,7 @@ class GateTest extends \PHPUnit\Framework\TestCase
         $payment = (new Payment(402))->setPaymentId('test payment id');
         $paymentUrl = $this->gate->getPurchasePaymentPageUrl($payment);
 
-        self::assertRegExp('/^https\:\/\/\w+\.\w+\.\w+\/\d+\/[\d\w\/\+=]+$/', $paymentUrl);
+        self::assertRegExp('~^https://\w+.\w+.\w+/\d+/[\w\s/+=]+$~', $paymentUrl);
     }
 
     public function testGetPurchasePaymentPageUrl()
