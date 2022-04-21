@@ -2,6 +2,9 @@
 
 namespace ecommpay;
 
+use BadMethodCallException;
+use DateTime;
+
 /**
  * Class Payment
  *
@@ -110,11 +113,11 @@ class Payment
     /**
      * Date and time when the payment period expires.
      *
-     * @param \DateTime $time
+     * @param DateTime $time
      *
      * @return Payment
      */
-    public function setBestBefore(\DateTime $time): Payment
+    public function setBestBefore(DateTime $time): Payment
     {
         $this->params['best_before'] = $time->format('r');
         return $this;
@@ -140,6 +143,6 @@ class Payment
             return $this;
         }
 
-        throw new \BadMethodCallException('Bad method call');
+        throw new BadMethodCallException('Bad method call');
     }
 }

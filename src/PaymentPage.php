@@ -7,12 +7,23 @@ namespace ecommpay;
  */
 class PaymentPage
 {
+    const
+        PAYMENT_URL_PATTERN = '%s/payment/?%s&signature=%s',
+        VALIDATOR_URL_PATTERN = '%s/params/check/?%s';
+
     /**
      * Base URL for payment
      *
      * @var string
      */
-    private $baseUrl = 'https://paymentpage.ecommpay.com/payment';
+    private $baseUrl = 'https://paymentpage.ecommpay.com';
+
+    /**
+     * Base URL for payment
+     *
+     * @var string
+     */
+    private $apiUrl = 'https://sdk.ecommpay.com';
 
     /**
      * Signature Handler
@@ -54,7 +65,27 @@ class PaymentPage
      */
     public function getUrl(Payment $payment): string
     {
-        return $this->baseUrl . '?'. http_build_query($payment->getParams()) . '&signature=' .
-            urlencode($this->signatureHandler->sign($payment->getParams()));
+        return sprintf(
+            self::PAYMENT_URL_PATTERN,
+            $this->baseUrl,
+            http_build_query($payment->getParams()),
+            urlencode($this->signatureHandler->sign($payment->getParams()))
+        );
+    }
+
+
+    /**
+     * Return full URL for check payment parameters.
+     *
+     * @param Payment $payment
+     * @return string
+     */
+    public function getValidationUrl(Payment $payment): string
+    {
+        return sprintf(
+            self::VALIDATOR_URL_PATTERN,
+            $this->apiUrl,
+            http_build_query($payment->getParams())
+        );
     }
 }
