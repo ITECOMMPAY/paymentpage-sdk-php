@@ -33,20 +33,28 @@ class Gate
      *
      * @var bool
      */
-    private $validateParams;
+    private $validateParams = false;
 
     /**
      * Gate constructor.
      *
      * @param string $secret Secret key
      * @param string $baseUrl Base URL for concatenate with payment params
-     * @param bool $validateParams Validate payment params before generate PaymentPage URL
      */
-    public function __construct(string $secret, string $baseUrl = '', bool $validateParams = true)
+    public function __construct(string $secret, string $baseUrl = '')
     {
         $this->signatureHandler = new SignatureHandler($secret);
         $this->paymentPageUrlBuilder = new PaymentPage($this->signatureHandler, $baseUrl);
-        $this->validateParams = $validateParams;
+    }
+
+    /**
+     * Enable or disable validation payment params before generate PaymentPage URL.
+     * @param bool $flag
+     * @return void
+     */
+    public function setValidationParams(bool $flag)
+    {
+        $this->validateParams = $flag;
     }
 
     /**
