@@ -2,6 +2,8 @@
 
 namespace ecommpay;
 
+use function in_array;
+
 /**
  * SignatureHandler
  *
@@ -25,7 +27,7 @@ class SignatureHandler
      *
      * @param string $secretKey
      */
-    public function __construct($secretKey)
+    public function __construct(string $secretKey)
     {
         $this->secretKey = $secretKey;
     }
@@ -37,7 +39,7 @@ class SignatureHandler
      * @param string $signature
      * @return boolean
      */
-    public function check(array $params, $signature): bool
+    public function check(array $params, string $signature): bool
     {
         return $this->sign($params) === $signature;
     }
@@ -61,15 +63,18 @@ class SignatureHandler
      * @param array $ignoreParamKeys
      * @param string $prefix
      * @param bool $sort
-
      * @return array
      */
-    private function getParamsToSign(array $params, array $ignoreParamKeys = [], $prefix = '', $sort = true)
-    {
+    private function getParamsToSign(
+        array $params,
+        array $ignoreParamKeys = [],
+        string $prefix = '',
+        bool $sort = true
+    ): array {
         $paramsToSign = [];
 
         foreach ($params as $key => $value) {
-            if (\in_array($key, $ignoreParamKeys, true)) {
+            if (in_array($key, $ignoreParamKeys, true)) {
                 continue;
             }
 

@@ -2,6 +2,12 @@
 
 namespace ecommpay;
 
+use ecommpay\exception\ProcessException;
+
+use ecommpay\exception\SdkException;
+
+use function is_array;
+
 /**
  * Callback
  */
@@ -97,7 +103,10 @@ class Callback
         $this->signatureHandler = $signatureHandler;
 
         if (!$this->checkSignature()) {
-            throw new ProcessException("Signature {$this->getSignature()} is invalid");
+            throw new ProcessException(
+                sprintf('Signature %s is invalid', $this->getSignature()),
+                SdkException::INVALID_SIGNATURE
+            );
         }
     }
 
@@ -114,7 +123,7 @@ class Callback
     /**
      * Get payment info
      *
-     * @return array|null
+     * @return ?array
      */
     public function getPayment()
     {
@@ -124,7 +133,7 @@ class Callback
     /**
      * Get payment status
      *
-     * @return string|null
+     * @return ?string
      */
     public function getPaymentStatus()
     {
@@ -134,7 +143,7 @@ class Callback
     /**
      * Get payment ID
      *
-     * @return string|null
+     * @return ?string
      */
     public function getPaymentId()
     {
@@ -153,7 +162,7 @@ class Callback
             ?? $this->getValue('general.signature');
 
         if (!$signature) {
-            throw new ProcessException('Undefined signature');
+            throw new ProcessException('Undefined signature', SdkException::UNDEFINED_SIGNATURE);
         }
 
         return $signature;
@@ -168,12 +177,12 @@ class Callback
      *
      * @throws ProcessException
      */
-    public function toArray($rawData): array
+    public function toArray(string $rawData): array
     {
         $data = json_decode($rawData, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new ProcessException('Error on response decoding');
+            throw new ProcessException('Error on response decoding', SdkException::DECODING_ERROR);
         }
 
         return $data;
@@ -208,6 +217,7 @@ class Callback
      * checkSignature
      *
      * @return boolean
+     * @throws ProcessException
      */
     public function checkSignature(): bool
     {
@@ -223,14 +233,14 @@ class Callback
      * @param string $name param name
      * @param array $data tmp data
      */
-    private function removeParam($name, array &$data)
+    private function removeParam(string $name, array &$data)
     {
         if (isset($data[$name])) {
             unset($data[$name]);
         }
 
         foreach ($data as &$val) {
-            if (\is_array($val)) {
+            if (is_array($val)) {
                 $this->removeParam($name, $val);
             }
         }

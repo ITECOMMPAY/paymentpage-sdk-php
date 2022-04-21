@@ -2,6 +2,9 @@
 
 namespace ecommpay;
 
+use ecommpay\exception\ProcessException;
+use ecommpay\exception\ValidationException;
+
 /**
  * Gate
  */
@@ -26,15 +29,24 @@ class Gate
     private $signatureHandler;
 
     /**
+     * Flag validate payment params before generate PaymentPage URL.
+     *
+     * @var bool
+     */
+    private $validateParams;
+
+    /**
      * Gate constructor.
      *
      * @param string $secret Secret key
      * @param string $baseUrl Base URL for concatenate with payment params
+     * @param bool $validateParams Validate payment params before generate PaymentPage URL
      */
-    public function __construct($secret, string $baseUrl = '')
+    public function __construct(string $secret, string $baseUrl = '', bool $validateParams = true)
     {
         $this->signatureHandler = new SignatureHandler($secret);
         $this->paymentPageUrlBuilder = new PaymentPage($this->signatureHandler, $baseUrl);
+        $this->validateParams = $validateParams;
     }
 
     /**
@@ -54,9 +66,14 @@ class Gate
      * @param Payment $payment Payment object
      *
      * @return string
+     * @throws ValidationException
      */
     public function getPurchasePaymentPageUrl(Payment $payment): string
     {
+        if ($this->validateParams) {
+            $this->validateParams($payment);
+        }
+
         return $this->paymentPageUrlBuilder->getUrl($payment);
     }
 
@@ -72,5 +89,40 @@ class Gate
     public function handleCallback(string $data): Callback
     {
         return new Callback($data, $this->signatureHandler);
+    }
+
+
+    /**
+     * @param Payment $payment
+     * @return void
+     * @throws ValidationException
+     */
+    private function validateParams(Payment $payment)
+    {
+        $requestUri = $this->paymentPageUrlBuilder->getValidationUrl($payment);
+        $stream = fopen($requestUri, 'r');
+        $errors = [];
+        $status = 0;
+
+        // Reverse required!!!
+        $headers = array_reverse(stream_get_meta_data($stream)['wrapper_data']);
+
+        foreach ($headers as $header) {
+            if (preg_match('/^HTTP\/\d.\d (\d+) /', $header, $match)) {
+                $status = (int) $match[1];
+                break;
+            }
+        }
+
+        if ($status !== 200) {
+            $data = json_decode(stream_get_contents($stream));
+            $errors = $data['errors'];
+        }
+
+        fclose($stream);
+
+        if (count($errors) > 0) {
+            throw new ValidationException($errors);
+        }
     }
 }
