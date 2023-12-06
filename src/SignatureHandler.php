@@ -78,7 +78,7 @@ class SignatureHandler
                 continue;
             }
 
-            $paramKey = ($prefix ? $prefix . ':' : '') . $key;
+            $paramKey = ($prefix ? $prefix . ':' : '') . str_replace(':', '::', $key);
             if (is_array($value)) {
                 $subArray = $this->getParamsToSign($value, $ignoreParamKeys, $paramKey, false);
                 $paramsToSign = array_merge($paramsToSign, $subArray);
