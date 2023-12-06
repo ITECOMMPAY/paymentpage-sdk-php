@@ -8,8 +8,8 @@ namespace ecommpay;
 class PaymentPage
 {
     const
-        PAYMENT_URL_PATTERN = '%s/payment/?%s&signature=%s',
-        VALIDATOR_URL_PATTERN = '%s/params/check/?%s';
+        PAYMENT_URL_PATTERN = '%s/payment?%s&signature=%s',
+        VALIDATOR_URL_PATTERN = '%s/params/check?%s';
 
     /**
      * Base URL for payment
@@ -72,7 +72,6 @@ class PaymentPage
             urlencode($this->signatureHandler->sign($payment->getParams()))
         );
     }
-
 
     /**
      * Return full URL for check payment parameters.
