@@ -51,7 +51,7 @@ class Callback
     /**
      * Holding of funds (produced on authorization request) is cancelled
      */
-    const CANCELLED_STATUS = 'cancelled';
+    const CANCELLED_STATUS = 'canceled';
 
     /**
      * Successfully completed the full refund after a successful payment
