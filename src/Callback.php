@@ -51,7 +51,7 @@ class Callback
     /**
      * Holding of funds (produced on authorization request) is cancelled
      */
-    public const CANCELED_STATUS = 'canceled';
+    const CANCELED_STATUS = 'canceled';
 
     /**
      * @deprecated use Callback::CANCELED_STATUS instead
