@@ -51,7 +51,15 @@ class Callback
     /**
      * Holding of funds (produced on authorization request) is cancelled
      */
-    const CANCELLED_STATUS = 'cancelled';
+    const CANCELED_STATUS = 'canceled';
+
+    /**
+     * @deprecated use Callback::CANCELED_STATUS instead
+     * @see Callback::CANCELED_STATUS
+     *
+     * Holding of funds (produced on authorization request) is cancelled
+     */
+    const CANCELLED_STATUS = self::CANCELED_STATUS;
 
     /**
      * Successfully completed the full refund after a successful payment
