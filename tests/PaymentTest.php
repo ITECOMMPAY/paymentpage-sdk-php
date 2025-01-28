@@ -25,7 +25,7 @@ class PaymentTest extends \PHPUnit\Framework\TestCase
         $payment
             ->setPaymentId('test payment id')
             ->setBestBefore(new \DateTime('2000-01-01 00:00:00 +0000'));
-        self::assertEquals('Sat, 01 Jan 2000 00:00:00 +0000', $payment->getParams()['best_before']);
+        self::assertEquals('2000-01-01T00:00:00+00:00', $payment->getParams()['best_before']);
     }
 
     public function testMagicMethods()
