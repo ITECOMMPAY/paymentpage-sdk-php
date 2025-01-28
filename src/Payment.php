@@ -119,7 +119,7 @@ class Payment
      */
     public function setBestBefore(DateTime $time): Payment
     {
-        $this->params['best_before'] = $time->format('r');
+        $this->params['best_before'] = $time->format('c');
         return $this;
     }
 
