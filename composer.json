@@ -2,7 +2,7 @@
     "name": "ecommpay/paymentpage-sdk",
     "description": "Ecommpay SDK",
     "type": "library",
-    "version": "1.5.1",
+    "version": "1.5.2",
     "authors": [
         {
             "name": "Roman Zhukov",
