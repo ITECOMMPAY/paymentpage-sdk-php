@@ -2,16 +2,12 @@
 
 namespace ecommpay\tests;
 
+use ecommpay\exception\ProcessException;
 use ecommpay\Gate;
 use PHPUnit\Framework\TestCase;
 
 class CallbackTest extends TestCase
 {
-    /**
-     * @var Gate
-     */
-    private $gate;
-
     /**
      * @var Callback
      */
@@ -19,15 +15,15 @@ class CallbackTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->gate = new Gate('secret');
+        $gate = new Gate('secret');
         $this->callback =
-            $this->gate
+            $gate
                 ->handleCallback(require __DIR__ . '/data/callback.php');
     }
 
     public function testGetPaymentId()
     {
-        self::assertEquals('000049', $this->callback->getPaymentId());
+        self::assertEquals('000049', $this->callback->getPayment()->getId());
     }
 
     public function testGetPayment()
@@ -36,6 +32,9 @@ class CallbackTest extends TestCase
         self::assertArrayHasKey('status', $this->callback->getPayment());
     }
 
+    /**
+     * @throws ProcessException
+     */
     public function testGetSignature()
     {
         self::assertNotEmpty($this->callback->getSignature());
@@ -43,6 +42,6 @@ class CallbackTest extends TestCase
 
     public function testGetPaymentStatus()
     {
-        self::assertEquals('success', $this->callback->getPaymentStatus());
+        self::assertEquals('success', $this->callback->getPayment()->getStatus());
     }
 }

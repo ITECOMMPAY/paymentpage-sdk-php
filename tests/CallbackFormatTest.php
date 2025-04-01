@@ -3,28 +3,32 @@
 namespace ecommpay\tests;
 
 use ecommpay\Callback;
+use ecommpay\exception\ProcessException;
 use ecommpay\SignatureHandler;
+use PHPUnit\Framework\TestCase;
 
-class CallbackFormatTest extends \PHPUnit\Framework\TestCase
+class CallbackFormatTest extends TestCase
 {
     /**
      * @var array
      */
     private $cases;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->cases = require __DIR__ . '/data/callbackFormats.php';
     }
 
+    /**
+     * @throws ProcessException
+     */
     public function testFormats()
     {
         foreach ($this->cases as $callbackData) {
             $callback = (new Callback($callbackData, new SignatureHandler('123')));
 
-            $callback->getPayment();
-            $callback->getPaymentId();
-            $callback->getPaymentStatus();
+            $callback->getPayment()->getId();
+            $callback->getPayment()->getStatus();
         }
     }
 }
