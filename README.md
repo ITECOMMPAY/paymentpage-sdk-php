@@ -45,24 +45,20 @@ $gate->setPaymentBaseUrl('https://mydomain.com/payment');
 You'll need to autoload this code in order to handle notifications:
 
 ```php
-$gate = new ecommpay\Gate('secret');
+use ecommpay\enums\EcpPaymentStatus;$gate = new ecommpay\Gate('secret');
 $callback = $gate->handleCallback($data);
+
+// For example:
+$payment_id = $callback->getPayment()->getId();
+$payment_status = $callback->getPayment()->getStatus();
+$is_success = $callback->isSuccess();
+
+// Different approaches (more examples):
+$callback->getPayment()->getValue('status') === EcpPaymentStatus::AWAITING_CUSTOMER;
+$callback->getValue('payment.status') === EcpPaymentStatus::PARTIALLY_REFUNDED;
+$callback->getData()['payment']['status'] === EcpPaymentStatus::AWAITING_3DS_RESULT;
 ```
 
 `$data` is the JSON data received from payment system;
 
 `$callback` is the Callback object describing properties received from payment system;
-`$callback` implements these methods: 
-1. `Callback::getPaymentStatus();`
-    Get payment status.
-2. `Callback::getPayment();`
-    Get all payment data.
-3. `Callback::getPaymentId();`
-    Get payment ID in your system.
-    
-### TODO
-
-- [x] Payment Page opening 
-- [x] Notifications handling
-- [ ] Direct Gate requests
-- [ ] PHPDoc

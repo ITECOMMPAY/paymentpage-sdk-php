@@ -2,6 +2,7 @@
 
 namespace ecommpay\callback;
 
+use ecommpay\enums\EcpPaymentStatus;
 use ecommpay\support\DataContainer;
 
 class Payment extends DataContainer
@@ -11,12 +12,14 @@ class Payment extends DataContainer
     const STATUS = 'status';
     const ID = 'id';
 
-    const SUCCESS_STATUS = 'success';
-    const DECLINE_STATUS = 'decline';
-
     public function getStatus()
     {
         return $this->getData()[self::STATUS];
+    }
+
+    public function isSuccess(): bool
+    {
+        return $this->getStatus() === EcpPaymentStatus::SUCCESS;
     }
 
     public function getId()

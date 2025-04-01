@@ -99,7 +99,6 @@ class Gate
         return new Callback($data, $this->signatureHandler);
     }
 
-
     /**
      * @param Payment $payment
      * @return void

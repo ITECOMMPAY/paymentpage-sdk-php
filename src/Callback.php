@@ -57,6 +57,11 @@ class Callback extends DataContainer
         return $this->operation;
     }
 
+    public function isSuccess(): bool
+    {
+        return $this->payment->isSuccess();
+    }
+
     /**
      * Get signature
      *
