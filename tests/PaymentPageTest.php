@@ -5,8 +5,9 @@ namespace ecommpay\tests;
 use ecommpay\PaymentPage;
 use ecommpay\SignatureHandler;
 use ecommpay\Payment;
+use PHPUnit\Framework\TestCase;
 
-class PaymentPageTest extends \PHPUnit\Framework\TestCase
+class PaymentPageTest extends TestCase
 {
 
     public function testGetUrl()

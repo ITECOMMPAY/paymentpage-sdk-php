@@ -3,8 +3,9 @@
 namespace ecommpay\tests;
 
 use ecommpay\Payment;
+use PHPUnit\Framework\TestCase;
 
-class PaymentTest extends \PHPUnit\Framework\TestCase
+class PaymentTest extends TestCase
 {
 
     public function testGetParams()

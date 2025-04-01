@@ -3,8 +3,9 @@
 namespace ecommpay\tests;
 
 use ecommpay\Gate;
+use PHPUnit\Framework\TestCase;
 
-class CallbackTest extends \PHPUnit\Framework\TestCase
+class CallbackTest extends TestCase
 {
     /**
      * @var Gate
@@ -16,7 +17,7 @@ class CallbackTest extends \PHPUnit\Framework\TestCase
      */
     private $callback;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->gate = new Gate('secret');
         $this->callback =

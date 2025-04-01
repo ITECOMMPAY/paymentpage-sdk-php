@@ -3,8 +3,9 @@
 namespace ecommpay\tests;
 
 use ecommpay\SignatureHandler;
+use PHPUnit\Framework\TestCase;
 
-class SignatureHandlerTest extends \PHPUnit\Framework\TestCase
+class SignatureHandlerTest extends TestCase
 {
     /**
      * @var array
@@ -35,7 +36,7 @@ class SignatureHandlerTest extends \PHPUnit\Framework\TestCase
      */
     private $handler;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->handler = new SignatureHandler('secret');
     }
