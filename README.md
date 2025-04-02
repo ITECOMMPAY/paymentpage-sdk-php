@@ -7,7 +7,7 @@
 This is a set of libraries in the PHP language to ease integration of your service
 with the Ecommpay Payment Page.
 
-Please note that for correct SDK operating you must have at least PHP 7.0.  
+Please note that for correct SDK operating you must have at least PHP 7.0.
 
 ## Payment flow
 
@@ -16,6 +16,7 @@ Please note that for correct SDK operating you must have at least PHP 7.0.
 ## Installation
 
 Install with composer
+
 ```bash
 composer require ecommpay/paymentpage-sdk
 ```
@@ -32,10 +33,13 @@ $url = $gate->getPurchasePaymentPageUrl($payment);
 `$url` here is the signed URL.
 
 If you want to use another domain for URL you can change it with optional `Gate` constructor parameter:
+
 ```php
 new ecommpay\Gate('secret', 'https://mydomain.com/payment');
 ```
-or change it with method 
+
+or change it with method
+
 ```php
 $gate->setPaymentBaseUrl('https://mydomain.com/payment');
 ```
@@ -54,8 +58,8 @@ $payment_status = $callback->getPayment()->getStatus();
 $is_success = $callback->isSuccess();
 
 // Different approaches (more examples):
-$callback->getPayment()->getValue('status') === EcpPaymentStatus::AWAITING_CUSTOMER;
-$callback->getValue('payment.status') === EcpPaymentStatus::PARTIALLY_REFUNDED;
+$callback->getPayment()->getDataValue('status') === EcpPaymentStatus::AWAITING_CUSTOMER;
+$callback->getDataValue('payment.status') === EcpPaymentStatus::PARTIALLY_REFUNDED;
 $callback->getData()['payment']['status'] === EcpPaymentStatus::AWAITING_3DS_RESULT;
 ```
 

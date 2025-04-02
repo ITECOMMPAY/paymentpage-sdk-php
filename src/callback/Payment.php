@@ -12,9 +12,9 @@ class Payment extends DataContainer
     public const STATUS = 'status';
     public const ID = 'id';
 
-    public function getStatus()
+    public function getStatus(): ?string
     {
-        return $this->getData()[self::STATUS];
+        return $this->getData()[self::STATUS] ?? null;
     }
 
     public function isSuccess(): bool
@@ -22,8 +22,12 @@ class Payment extends DataContainer
         return $this->getStatus() === EcpPaymentStatus::SUCCESS;
     }
 
-    public function getId()
+    public function getId(): ?int
     {
-        return $this->getData()[self::ID];
+        $id = $this->getData()[self::ID] ?? null;
+        if (is_null($id)) {
+            return null;
+        }
+        return intval($id);
     }
 }

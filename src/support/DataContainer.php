@@ -15,7 +15,7 @@ abstract class DataContainer
      */
     public function __construct($data)
     {
-        $this->data = is_array($data) ? $data : $this->toArray($data);
+        $this->setData($data);
     }
 
     public function getData(): array
@@ -23,30 +23,45 @@ abstract class DataContainer
         return $this->data;
     }
 
-    public function setData(array $data): DataContainer
+    /**
+     * @throws ProcessException
+     */
+    public function setData($data): DataContainer
     {
-        $this->data = $data;
+        $this->data = $this->toArray($data);
         return $this;
     }
 
     /**
      * Cast raw data to array
      *
-     * @param string $rawData
+     * @param $rawData
      *
      * @return array
      *
      * @throws ProcessException
      */
-    public function toArray(string $rawData): array
+    private function toArray($rawData): array
     {
-        $data = json_decode($rawData, true);
+        if (is_string($rawData)) {
+            $data = json_decode($rawData, true);
 
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new ProcessException('Error on response decoding', SdkException::DECODING_ERROR);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new ProcessException(
+                    'Error on response decoding. Expected a valid JSON',
+                    SdkException::DECODING_ERROR
+                );
+            }
+
+            return $data;
+        } elseif (is_array($rawData)) {
+            return $rawData;
+        } else {
+            throw new ProcessException(
+                'Error on response decoding. Unexpected type of data',
+                SdkException::DECODING_ERROR
+            );
         }
-
-        return $data;
     }
 
     /**
@@ -56,7 +71,7 @@ abstract class DataContainer
      *
      * @return mixed
      */
-    public function getValue(string $namePath)
+    public function getDataValue(string $namePath)
     {
         $keys = explode('.', $namePath);
         $data = $this->getData();

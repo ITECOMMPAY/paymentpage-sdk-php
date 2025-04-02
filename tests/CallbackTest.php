@@ -28,8 +28,8 @@ class CallbackTest extends TestCase
 
     public function testGetPayment()
     {
-        self::assertArrayHasKey('id', $this->callback->getPayment());
-        self::assertArrayHasKey('status', $this->callback->getPayment());
+        self::assertNotEmpty($this->callback->getPayment()->getId());
+        self::assertNotEmpty($this->callback->getPayment()->getStatus());
     }
 
     /**

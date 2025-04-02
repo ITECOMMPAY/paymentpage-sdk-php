@@ -2,6 +2,7 @@
 
 namespace ecommpay;
 
+use ecommpay\callback\Callback;
 use ecommpay\exception\ProcessException;
 use ecommpay\exception\ValidationException;
 
@@ -116,7 +117,7 @@ class Gate
 
         foreach ($headers as $header) {
             if (preg_match('/^HTTP\/\d.\d (\d+) /', $header, $match)) {
-                $status = (int) $match[1];
+                $status = (int)$match[1];
                 break;
             }
         }

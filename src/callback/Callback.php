@@ -1,14 +1,12 @@
 <?php
 
-namespace ecommpay;
+namespace ecommpay\callback;
 
-use ecommpay\callback\Operation;
-use ecommpay\callback\Payment;
 use ecommpay\exception\ProcessException;
-
 use ecommpay\exception\SdkException;
-
+use ecommpay\SignatureHandler;
 use ecommpay\support\DataContainer;
+
 use function is_array;
 
 /**
@@ -16,8 +14,8 @@ use function is_array;
  */
 class Callback extends DataContainer
 {
-    const PAYMENT_FIELD = 'payment';
-    const OPERATION_FIELD = 'operation';
+    public const PAYMENT_FIELD = 'payment';
+    public const OPERATION_FIELD = 'operation';
 
     private SignatureHandler $signatureHandler;
 
@@ -43,8 +41,15 @@ class Callback extends DataContainer
             );
         }
 
-        $this->payment = new Payment($this->getValue(self::PAYMENT_FIELD));
-        $this->operation = new Operation($this->getValue(self::OPERATION_FIELD));
+        $payment = $this->getDataValue(self::PAYMENT_FIELD);
+        if (!empty($payment)) {
+            $this->payment = new Payment($payment);
+        }
+
+        $operation = $this->getDataValue(self::OPERATION_FIELD);
+        if (!empty($operation)) {
+            $this->operation = new Operation($operation);
+        }
     }
 
     public function getPayment(): Payment
@@ -70,8 +75,8 @@ class Callback extends DataContainer
      */
     public function getSignature(): string
     {
-        $signature = $this->getValue('signature')
-            ?? $this->getValue('general.signature');
+        $signature = $this->getDataValue('signature')
+            ?? $this->getDataValue('general.signature');
 
         if (!$signature) {
             throw new ProcessException('Undefined signature', SdkException::UNDEFINED_SIGNATURE);

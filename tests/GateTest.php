@@ -2,7 +2,7 @@
 
 namespace ecommpay\tests;
 
-use ecommpay\Callback;
+use ecommpay\callback\Callback;
 use ecommpay\exception\ProcessException;
 use ecommpay\exception\ValidationException;
 use ecommpay\Gate;

@@ -2,7 +2,7 @@
 
 namespace ecommpay\tests;
 
-use ecommpay\Callback;
+use ecommpay\callback\Callback;
 use ecommpay\exception\ProcessException;
 use ecommpay\SignatureHandler;
 use PHPUnit\Framework\TestCase;
@@ -26,7 +26,6 @@ class CallbackFormatTest extends TestCase
     {
         foreach ($this->cases as $callbackData) {
             $callback = (new Callback($callbackData, new SignatureHandler('123')));
-
             $callback->getPayment()->getId();
             $callback->getPayment()->getStatus();
         }
