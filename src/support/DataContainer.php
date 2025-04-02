@@ -59,18 +59,18 @@ abstract class DataContainer
     public function getValue(string $namePath)
     {
         $keys = explode('.', $namePath);
-        $callbackData = $this->getData();
+        $data = $this->getData();
 
         foreach ($keys as $key) {
-            $value = $callbackData[$key] ?? null;
+            $value = $data[$key] ?? null;
 
             if (is_null($value)) {
                 return null;
             }
 
-            $callbackData = $value;
+            $data = $value;
         }
 
-        return $callbackData;
+        return $data;
     }
 }

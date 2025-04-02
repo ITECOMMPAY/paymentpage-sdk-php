@@ -7,10 +7,10 @@ use ecommpay\support\DataContainer;
 
 class Payment extends DataContainer
 {
-    const DESCRIPTION = 'description';
-    const METHOD = 'method';
-    const STATUS = 'status';
-    const ID = 'id';
+    public const DESCRIPTION = 'description';
+    public const METHOD = 'method';
+    public const STATUS = 'status';
+    public const ID = 'id';
 
     public function getStatus()
     {

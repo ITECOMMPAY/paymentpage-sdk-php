@@ -9,7 +9,7 @@ use Throwable;
  */
 interface SdkException extends Throwable
 {
-    const
+    public const
         INVALID_SIGNATURE = 0xa0000001,
         UNDEFINED_SIGNATURE = 0xa0000002,
         DECODING_ERROR = 0xa0000003,

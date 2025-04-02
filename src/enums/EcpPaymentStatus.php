@@ -50,7 +50,7 @@ final class EcpPaymentStatus
      * Awaiting customer return after redirecting the customer to an external provider system
      * @var string
      */
-    const AWAITING_REDIRECT_RESULT = 'awaiting redirect result';
+    public const AWAITING_REDIRECT_RESULT = 'awaiting redirect result';
 
     /**
      * Awaiting additional parameters

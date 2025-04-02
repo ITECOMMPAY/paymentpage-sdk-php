@@ -6,9 +6,9 @@ use ecommpay\support\DataContainer;
 
 class Operation extends DataContainer
 {
-    const REQUEST_ID = 'request_id';
-    const STATUS = 'status';
-    const SUCCESS_STATUS = 'success';
+    public const REQUEST_ID = 'request_id';
+    public const STATUS = 'status';
+    public const SUCCESS_STATUS = 'success';
 
     public function getStatus(): ?string
     {
