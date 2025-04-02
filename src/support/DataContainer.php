@@ -71,21 +71,15 @@ abstract class DataContainer
      *
      * @return mixed
      */
-    public function getDataValue(string $namePath)
+    public function getValue(string $namePath)
     {
-        $keys = explode('.', $namePath);
         $data = $this->getData();
-
-        foreach ($keys as $key) {
-            $value = $data[$key] ?? null;
-
-            if (is_null($value)) {
+        foreach (explode('.', $namePath) as $key) {
+            if (!isset($data[$key])) {
                 return null;
             }
-
-            $data = $value;
+            $data = $data[$key];
         }
-
         return $data;
     }
 }

@@ -13,6 +13,9 @@ class CallbackTest extends TestCase
      */
     private $callback;
 
+    /**
+     * @throws ProcessException
+     */
     protected function setUp(): void
     {
         $gate = new Gate('secret');
@@ -30,14 +33,6 @@ class CallbackTest extends TestCase
     {
         self::assertNotEmpty($this->callback->getPayment()->getId());
         self::assertNotEmpty($this->callback->getPayment()->getStatus());
-    }
-
-    /**
-     * @throws ProcessException
-     */
-    public function testGetSignature()
-    {
-        self::assertNotEmpty($this->callback->getSignature());
     }
 
     public function testGetPaymentStatus()

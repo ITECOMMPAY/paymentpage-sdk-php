@@ -12,7 +12,7 @@ class Operation extends DataContainer
 
     public function getStatus(): ?string
     {
-        return $this->getDataValue(self::STATUS);
+        return $this->getValue(self::STATUS);
     }
 
     public function isSuccess(): bool
@@ -22,6 +22,6 @@ class Operation extends DataContainer
 
     public function getRequestId(): ?string
     {
-        return $this->getDataValue(self::REQUEST_ID);
+        return $this->getValue(self::REQUEST_ID);
     }
 }

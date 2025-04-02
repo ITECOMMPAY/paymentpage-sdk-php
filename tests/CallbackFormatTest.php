@@ -26,8 +26,19 @@ class CallbackFormatTest extends TestCase
     {
         foreach ($this->cases as $callbackData) {
             $callback = (new Callback($callbackData, new SignatureHandler('123')));
-            $callback->getPayment()->getId();
-            $callback->getPayment()->getStatus();
+            $payment = $callback->getPayment();
+            if (
+                $payment
+            ) {
+                self::assertNotNull($payment->getId());
+            }
+
+            $operation = $callback->getOperation();
+            if (
+                $operation
+            ) {
+                self::assertNotEmpty($operation->getStatus());
+            }
         }
     }
 }

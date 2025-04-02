@@ -1,5 +1,6 @@
 <?php
 
+// More callbacks: https://developers.ecommpay.com/en/en_Gate_Callbacks.html
 $callback = [
     'payment' => [
         'id' => '000049',

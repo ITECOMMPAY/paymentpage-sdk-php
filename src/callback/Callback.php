@@ -41,25 +41,25 @@ class Callback extends DataContainer
             );
         }
 
-        $payment = $this->getDataValue(self::PAYMENT_FIELD);
+        $payment = $this->getValue(self::PAYMENT_FIELD);
         if (!empty($payment)) {
             $this->payment = new Payment($payment);
         }
 
-        $operation = $this->getDataValue(self::OPERATION_FIELD);
+        $operation = $this->getValue(self::OPERATION_FIELD);
         if (!empty($operation)) {
             $this->operation = new Operation($operation);
         }
     }
 
-    public function getPayment(): Payment
+    public function getPayment(): ?Payment
     {
-        return $this->payment;
+        return $this->payment ?? null;
     }
 
-    public function getOperation(): Operation
+    public function getOperation(): ?Operation
     {
-        return $this->operation;
+        return $this->operation ?? null;
     }
 
     public function isSuccess(): bool
@@ -75,8 +75,8 @@ class Callback extends DataContainer
      */
     public function getSignature(): string
     {
-        $signature = $this->getDataValue('signature')
-            ?? $this->getDataValue('general.signature');
+        $signature = $this->getValue('signature')
+            ?? $this->getValue('general.signature');
 
         if (!$signature) {
             throw new ProcessException('Undefined signature', SdkException::UNDEFINED_SIGNATURE);

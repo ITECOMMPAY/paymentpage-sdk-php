@@ -58,8 +58,8 @@ $payment_status = $callback->getPayment()->getStatus();
 $is_success = $callback->isSuccess();
 
 // Different approaches (more examples):
-$callback->getPayment()->getDataValue('status') === EcpPaymentStatus::AWAITING_CUSTOMER;
-$callback->getDataValue('payment.status') === EcpPaymentStatus::PARTIALLY_REFUNDED;
+$callback->getPayment()->getValue('status') === EcpPaymentStatus::AWAITING_CUSTOMER;
+$callback->getValue('payment.status') === EcpPaymentStatus::PARTIALLY_REFUNDED;
 $callback->getData()['payment']['status'] === EcpPaymentStatus::AWAITING_3DS_RESULT;
 ```
 
