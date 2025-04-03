@@ -22,12 +22,8 @@ class Payment extends DataContainer
         return $this->getStatus() === EcpPaymentStatus::SUCCESS;
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
-        $id = $this->getData()[self::ID] ?? null;
-        if (is_null($id)) {
-            return null;
-        }
-        return intval($id);
+        return $this->getValue(self::ID);
     }
 }

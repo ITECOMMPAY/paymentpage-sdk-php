@@ -24,7 +24,8 @@ class CallbackFormatTest extends TestCase
      */
     public function testFormats()
     {
-        foreach ($this->cases as $callbackData) {
+        foreach ($this->cases as $index => $callbackData) {
+            echo('Testing callback ' . ($index + 1) . ".\n");
             $callback = (new Callback($callbackData, new SignatureHandler('123')));
             $payment = $callback->getPayment();
             if (
