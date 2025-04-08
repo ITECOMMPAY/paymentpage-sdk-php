@@ -41,6 +41,13 @@ class Callback extends DataContainer
             );
         }
 
+        $this->setData($data);
+    }
+
+    public function setData($data): DataContainer
+    {
+        parent::setData($data);
+
         $payment = $this->getValue(self::PAYMENT_FIELD);
         if (!empty($payment)) {
             $this->payment = new Payment($payment);
@@ -50,6 +57,8 @@ class Callback extends DataContainer
         if (!empty($operation)) {
             $this->operation = new Operation($operation);
         }
+
+        return $this;
     }
 
     public function getPayment(): ?Payment
