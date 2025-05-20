@@ -28,7 +28,7 @@ class CallbackFormatTest extends TestCase
      */
     public function testFormats()
     {
-        foreach ($this->cases as $index => $callbackData) {
+        foreach ($this->cases as $callbackData) {
             $this->addToAssertionCount(1);
             $callback = (new Callback($callbackData, new SignatureHandler('123')));
             $payment = $callback->getPayment();
