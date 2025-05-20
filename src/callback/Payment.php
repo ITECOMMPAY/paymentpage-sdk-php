@@ -7,13 +7,16 @@ use ecommpay\support\DataContainer;
 
 class Payment extends DataContainer
 {
-    public const DESCRIPTION = 'description';
-    public const METHOD = 'method';
-    public const AMOUNT = 'amount';
-    public const STATUS = 'status';
-    public const ID = 'id';
+    const DESCRIPTION = 'description';
+    const METHOD = 'method';
+    const AMOUNT = 'amount';
+    const STATUS = 'status';
+    const ID = 'id';
 
-    public function getStatus(): ?string
+    /**
+     * @return string|null
+     */
+    public function getStatus()
     {
         return $this->getValue(self::STATUS);
     }
@@ -23,24 +26,36 @@ class Payment extends DataContainer
         return $this->getStatus() === EcpPaymentStatus::SUCCESS;
     }
 
-    public function getId(): ?string
+    /**
+     * @return string|null
+     */
+    public function getId()
     {
         return $this->getValue(self::ID);
     }
 
-    public function getDescription(): ?string
+    /**
+     * @return string|null
+     */
+    public function getDescription()
     {
         return $this->getValue(self::DESCRIPTION);
     }
 
-    public function getMethod(): ?string
+    /**
+     * @return string|null
+     */
+    public function getMethod()
     {
         return $this->getValue(self::METHOD);
     }
 
-    public function getAmount(): ?int
+    /**
+     * @return int|null
+     */
+    public function getAmount()
     {
         $amount = $this->getValue(self::AMOUNT);
-        return $amount != null ? intval($amount) : null;
+        return $amount !== null ? (int) $amount : null;
     }
 }

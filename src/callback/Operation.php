@@ -6,11 +6,14 @@ use ecommpay\support\DataContainer;
 
 class Operation extends DataContainer
 {
-    public const REQUEST_ID = 'request_id';
-    public const STATUS = 'status';
-    public const SUCCESS_STATUS = 'success';
+    const REQUEST_ID = 'request_id';
+    const STATUS = 'status';
+    const SUCCESS_STATUS = 'success';
 
-    public function getStatus(): ?string
+    /**
+     * @return string|null
+     */
+    public function getStatus()
     {
         return $this->getValue(self::STATUS);
     }
@@ -20,7 +23,10 @@ class Operation extends DataContainer
         return $this->getStatus() === self::SUCCESS_STATUS;
     }
 
-    public function getRequestId(): ?string
+    /**
+     * @return string|null
+     */
+    public function getRequestId()
     {
         return $this->getValue(self::REQUEST_ID);
     }

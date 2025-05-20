@@ -16,14 +16,23 @@ use function is_array;
  */
 class Callback extends DataContainer
 {
-    public const PAYMENT_FIELD = 'payment';
-    public const OPERATION_FIELD = 'operation';
+    const PAYMENT_FIELD = 'payment';
+    const OPERATION_FIELD = 'operation';
 
-    private SignatureHandler $signatureHandler;
+    /**
+     * @var \ecommpay\SignatureHandler
+     */
+    private $signatureHandler;
 
-    private Payment $payment;
+    /**
+     * @var Payment
+     */
+    private $payment;
 
-    private Operation $operation;
+    /**
+     * @var Operation
+     */
+    private $operation;
 
     /**
      * @param string|array $data RAW or already processed data from gate
@@ -63,12 +72,18 @@ class Callback extends DataContainer
         return $this;
     }
 
-    public function getPayment(): ?Payment
+    /**
+     * @return Payment|null
+     */
+    public function getPayment()
     {
         return $this->payment ?? null;
     }
 
-    public function getOperation(): ?Operation
+    /**
+     * @return Operation|null
+     */
+    public function getOperation()
     {
         return $this->operation ?? null;
     }
@@ -118,8 +133,9 @@ class Callback extends DataContainer
      *
      * @param string $name param name
      * @param array $data tmp data (passed by reference)
+     * @return void
      */
-    private function removeParam(string $name, array &$data): void
+    private function removeParam(string $name, array &$data)
     {
         if (isset($data[$name])) {
             unset($data[$name]);

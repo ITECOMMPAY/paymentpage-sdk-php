@@ -7,7 +7,11 @@ use ecommpay\exception\SdkException;
 
 abstract class DataContainer
 {
-    private array $data;
+
+    /**
+     * @var array
+     */
+    private $data;
 
     /**
      * @param string|array $data
@@ -54,14 +58,16 @@ abstract class DataContainer
             }
 
             return $data;
-        } elseif (is_array($rawData)) {
-            return $rawData;
-        } else {
-            throw new ProcessException(
-                'Error on response decoding. Unexpected type of data',
-                SdkException::DECODING_ERROR
-            );
         }
+
+        if (is_array($rawData)) {
+            return $rawData;
+        }
+
+        throw new ProcessException(
+            'Error on response decoding. Unexpected type of data',
+            SdkException::DECODING_ERROR
+        );
     }
 
     /**

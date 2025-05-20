@@ -14,8 +14,12 @@ class CallbackFormatTest extends TestCase
      */
     private $cases;
 
-    protected function setUp(): void
+    /**
+     * @return void
+     */
+    protected function setUp()
     {
+        parent::setUp();
         $this->cases = require __DIR__ . '/data/callbackFormats.php';
     }
 
@@ -25,19 +29,15 @@ class CallbackFormatTest extends TestCase
     public function testFormats()
     {
         foreach ($this->cases as $index => $callbackData) {
-            echo('Testing callback ' . ($index + 1) . ".\n");
+            $this->addToAssertionCount(1);
             $callback = (new Callback($callbackData, new SignatureHandler('123')));
             $payment = $callback->getPayment();
-            if (
-                $payment
-            ) {
+            if ($payment) {
                 self::assertNotNull($payment->getId());
             }
 
             $operation = $callback->getOperation();
-            if (
-                $operation
-            ) {
+            if ($operation) {
                 self::assertNotEmpty($operation->getStatus());
             }
         }

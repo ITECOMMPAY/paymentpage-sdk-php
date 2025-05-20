@@ -11,9 +11,9 @@ use ecommpay\exception\ValidationException;
  */
 class Gate
 {
-    public const CURRENCY_RUB = 'RUB';
-    public const CURRENCY_USD = 'USD';
-    public const CURRENCY_EUR = 'EUR';
+    const CURRENCY_RUB = 'RUB';
+    const CURRENCY_USD = 'USD';
+    const CURRENCY_EUR = 'EUR';
 
     /**
      * Builder for Payment page
