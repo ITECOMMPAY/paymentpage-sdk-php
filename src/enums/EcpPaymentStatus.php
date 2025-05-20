@@ -2,7 +2,7 @@
 
 namespace ecommpay\enums;
 
-use ecommpay\callback\Callback;
+use ecommpay\Callback;
 
 final class EcpPaymentStatus
 {

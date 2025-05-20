@@ -1,7 +1,9 @@
 <?php
 
-namespace ecommpay\callback;
+namespace ecommpay;
 
+use ecommpay\callback\Operation;
+use ecommpay\callback\Payment;
 use ecommpay\exception\ProcessException;
 use ecommpay\exception\SdkException;
 use ecommpay\SignatureHandler;

@@ -2,7 +2,7 @@
 
 namespace ecommpay\tests;
 
-use ecommpay\callback\Callback;
+use ecommpay\Callback;
 use ecommpay\exception\ProcessException;
 use ecommpay\SignatureHandler;
 use PHPUnit\Framework\TestCase;

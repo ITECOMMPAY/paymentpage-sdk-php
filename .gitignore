@@ -4,6 +4,8 @@ composer.lock
 .DS_Store
 Thumbs.db
 clover.xml
+.vscode
+.idea
 
 ### VisualStudioCode template
 .vscode/*
