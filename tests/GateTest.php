@@ -3,26 +3,32 @@
 namespace ecommpay\tests;
 
 use ecommpay\Callback;
+use ecommpay\exception\ProcessException;
+use ecommpay\exception\ValidationException;
 use ecommpay\Gate;
 use ecommpay\Payment;
+use PHPUnit\Framework\TestCase;
 
-class GateTest extends \PHPUnit\Framework\TestCase
+class GateTest extends TestCase
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $testUrl = 'http://test-url.test/test';
 
-    /**
-     * @var Gate
-     */
+    /** @var Gate */
     private $gate;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
+        parent::setUp();
         $this->gate = new Gate('secret', $this->testUrl);
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function testGetPurchasePaymentPageUrl()
     {
         $payment = (new Payment(100))->setPaymentId('test payment id');
@@ -32,6 +38,9 @@ class GateTest extends \PHPUnit\Framework\TestCase
         self::assertStringStartsWith($this->testUrl, $paymentUrl);
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function testSetPaymentBaseUrl()
     {
         $someTestUrl = 'http://some-test-url.test/test';
@@ -43,6 +52,9 @@ class GateTest extends \PHPUnit\Framework\TestCase
         self::assertStringStartsWith($someTestUrl, $paymentUrl);
     }
 
+    /**
+     * @throws ProcessException
+     */
     public function testHandleCallback()
     {
         $callback = $this->gate->handleCallback(require __DIR__ . '/data/callback.php');

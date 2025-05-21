@@ -3,12 +3,11 @@
 namespace ecommpay\tests;
 
 use ecommpay\SignatureHandler;
+use PHPUnit\Framework\TestCase;
 
-class SignatureHandlerTest extends \PHPUnit\Framework\TestCase
+class SignatureHandlerTest extends TestCase
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     private $data = [
         'customer' => [
             'project_id' => 0,
@@ -25,18 +24,18 @@ class SignatureHandlerTest extends \PHPUnit\Framework\TestCase
         'frame_mode' => 'popup',
     ];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $signature = 'lY0LTSAzpR7zGce5qfYGacOuYlHGWqkMcQlqmjlsDDZI2gVcE1qVeWANnkIR7mdOqRXJnL1kO0lUmkQ0YYLWRg==';
 
-    /**
-     * @var SignatureHandler
-     */
+    /** @var SignatureHandler */
     private $handler;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
+        parent::setUp();
         $this->handler = new SignatureHandler('secret');
     }
 

@@ -2,9 +2,12 @@
 
 namespace ecommpay\tests;
 
+use BadMethodCallException;
+use DateTime;
 use ecommpay\Payment;
+use PHPUnit\Framework\TestCase;
 
-class PaymentTest extends \PHPUnit\Framework\TestCase
+class PaymentTest extends TestCase
 {
 
     public function testGetParams()
@@ -24,7 +27,7 @@ class PaymentTest extends \PHPUnit\Framework\TestCase
 
         $payment
             ->setPaymentId('test payment id')
-            ->setBestBefore(new \DateTime('2000-01-01 00:00:00 +0000'));
+            ->setBestBefore(new DateTime('2000-01-01 00:00:00 +0000'));
         self::assertEquals('2000-01-01T00:00:00+00:00', $payment->getParams()['best_before']);
     }
 
@@ -35,7 +38,7 @@ class PaymentTest extends \PHPUnit\Framework\TestCase
 
         self::assertEquals('token', $payment->getParams()['account_token']);
         self::assertEquals('type', $payment->getParams()['card_operation_type']);
-        self::expectException(\BadMethodCallException::class);
+        self::expectException(BadMethodCallException::class);
         $payment->nonExistantMethod();
     }
 }
