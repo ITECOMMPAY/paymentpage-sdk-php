@@ -14,10 +14,12 @@ class CallbackTest extends TestCase
     private $callback;
 
     /**
+     * @return void
      * @throws ProcessException
      */
-    protected function setUp(): void
+    protected function setUp()
     {
+        parent::setUp();
         $gate = new Gate('secret');
         $this->callback =
             $gate

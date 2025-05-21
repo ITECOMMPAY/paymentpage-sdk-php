@@ -7,7 +7,8 @@ use PHPUnit\Framework\TestCase;
 
 class SignatureHandlerTest extends TestCase
 {
-    private array $data = [
+    /** @var array */
+    private $data = [
         'customer' => [
             'project_id' => 0,
             'id' => 'sutm_id',
@@ -23,12 +24,18 @@ class SignatureHandlerTest extends TestCase
         'frame_mode' => 'popup',
     ];
 
-    private string $signature = 'lY0LTSAzpR7zGce5qfYGacOuYlHGWqkMcQlqmjlsDDZI2gVcE1qVeWANnkIR7mdOqRXJnL1kO0lUmkQ0YYLWRg==';
+    /** @var string */
+    private $signature = 'lY0LTSAzpR7zGce5qfYGacOuYlHGWqkMcQlqmjlsDDZI2gVcE1qVeWANnkIR7mdOqRXJnL1kO0lUmkQ0YYLWRg==';
 
-    private SignatureHandler $handler;
+    /** @var SignatureHandler */
+    private $handler;
 
-    protected function setUp(): void
+    /**
+     * @return void
+     */
+    protected function setUp()
     {
+        parent::setUp();
         $this->handler = new SignatureHandler('secret');
     }
 

@@ -11,12 +11,18 @@ use PHPUnit\Framework\TestCase;
 
 class GateTest extends TestCase
 {
-    private string $testUrl = 'http://test-url.test/test';
+    /** @var string */
+    private $testUrl = 'http://test-url.test/test';
 
-    private Gate $gate;
+    /** @var Gate */
+    private $gate;
 
-    protected function setUp(): void
+    /**
+     * @return void
+     */
+    protected function setUp()
     {
+        parent::setUp();
         $this->gate = new Gate('secret', $this->testUrl);
     }
 
