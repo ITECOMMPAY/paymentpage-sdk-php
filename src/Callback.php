@@ -87,6 +87,11 @@ class Callback
     const REVERSED_STATUS = 'reversed';
 
     /**
+     * Completed partial refund after a successful payment before closing of the business day
+     */
+    const PART_REVERSED_STATUS = 'partially reversed';
+
+    /**
      * Callback data as array
      *
      * @var array
