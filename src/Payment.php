@@ -56,6 +56,7 @@ use DateTime;
  * @method $this setBaseurl(string $url) Basic Payment Page address that is used in case the Payment Page domain differs from the domain used to connect libraries or if merchant.js is not connected via the <script> tag
  * @method $this setPaymentExtraParam(string $param) Additional parameter to be forwarded to Gate
  * @method $this setFrameMode(string $mode) Widget launch mode
+ * @method $this setHide(string $hide) Codes of the payment methods to be hidden
  * phpcs:enable
  */
 class Payment
