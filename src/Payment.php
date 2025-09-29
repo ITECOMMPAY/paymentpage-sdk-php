@@ -12,7 +12,7 @@ use DateTime;
  *
  * phpcs:disable
  * @method $this setAccountToken(string $token):self The token of the bank card that will be used to perform a payment
- * @method $this setCardOperationType(string $type) Type of payment performed via payment card
+ * @method $this setOperationType(string $type) Type of payment performed via payment card
  * @method $this setCloseOnMissclick(bool $bool) A parameter that specifies the action of the widget (opened in the modal window) when a customer clicks outside the widget area.
  * @method $this setCssModalWrap(string $wrap) An additional CSS class for a modal window.
  * @method $this setCustomerId(string $id) Unique ID of the customer in your project
@@ -120,6 +120,19 @@ class Payment
     public function setBestBefore(DateTime $time): Payment
     {
         $this->params['best_before'] = $time->format('c');
+        return $this;
+    }
+
+    /**
+     * @deprecated 1.5.4 Use {@see Payment::setOperationType()} instead.
+     *
+     * Type of payment performed via payment card
+     *
+     */
+    public function setCardOperationType(string $type): Payment
+    {
+        $this->params['operation_type'] = $type;
+
         return $this;
     }
 

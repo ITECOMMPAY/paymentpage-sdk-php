@@ -31,11 +31,34 @@ class PaymentTest extends \PHPUnit\Framework\TestCase
     public function testMagicMethods()
     {
         $payment = new Payment(100, 'test payment id');
-        $payment->setAccountToken('token')->setCardOperationType('type');
+        $payment->setAccountToken('token');
 
         self::assertEquals('token', $payment->getParams()['account_token']);
-        self::assertEquals('type', $payment->getParams()['card_operation_type']);
-        self::expectException(\BadMethodCallException::class);
+        $this->expectException(\BadMethodCallException::class);
         $payment->nonExistantMethod();
+    }
+
+    public function testCardOperationType()
+    {
+        $payment = new Payment(100, 'test payment id');
+        $payment->setCardOperationType('sale');
+
+        $urlParams = $payment->getParams();
+
+        self::assertArrayHasKey('operation_type', $urlParams);
+        self::assertEquals('sale', $urlParams['operation_type']);
+
+        self::assertArrayNotHasKey('card_operation_type', $urlParams);
+    }
+
+    public function testOperationType()
+    {
+        $payment = new Payment(100, 'test payment id');
+        $payment->setOperationType('auth');
+
+        $urlParams = $payment->getParams();
+
+        self::assertArrayHasKey('operation_type', $urlParams);
+        self::assertEquals('auth', $urlParams['operation_type']);
     }
 }
