@@ -61,4 +61,13 @@ class PaymentTest extends \PHPUnit\Framework\TestCase
         self::assertArrayHasKey('operation_type', $urlParams);
         self::assertEquals('auth', $urlParams['operation_type']);
     }
+
+    public function testBookingInfo()
+    {
+        $expectedBase64 = "eyJmaXJzdF9uYW1lIjoiSm9lIiwic3VybmFtZSI6IkRvZSIsImVtYWlsIjoiam9lQGRvZS5jb20iLCJzdGFydF9kYXRlIjoiMjEtMDEtMjAyNSIsImVuZF9kYXRlIjoiMjItMDEtMjAyNSIsImRlc2NyaXB0aW9uIjoiQW1hemluZyB2YWNhdGlvbiEiLCJ0b3RhbCI6MTAwMDB9";
+        $payment = new Payment(100, 'test payment id');
+        $payment->setBookingInfo(['first_name' => 'Joe', 'surname' => 'Doe', 'email' => 'joe@doe.com','start_date' => "21-01-2025", "end_date" => "22-01-2025", 'description' => 'Amazing vacation!', 'total' => 10000]);
+
+        self::assertEquals($expectedBase64, $payment->getParams()['booking_info']);
+    }
 }

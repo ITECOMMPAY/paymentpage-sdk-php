@@ -137,6 +137,19 @@ class Payment
     }
 
     /**
+     * Automatically converts given array into base64 and sets it to booking_info parameter
+     *
+     * @param array $info
+     * @return $this
+     */
+    public function setBookingInfo(array $info): Payment
+    {
+        $base64 = base64_encode(json_encode($info));
+        $this->params['booking_info'] = $base64;
+        return $this;
+    }
+
+    /**
      * Setter for payment's params, cuts prefix 'set'
      * and convert Pascal case to Snake case,
      * for example: 'setAccountToken'
