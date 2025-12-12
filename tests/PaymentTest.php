@@ -64,10 +64,14 @@ class PaymentTest extends \PHPUnit\Framework\TestCase
 
     public function testBookingInfo()
     {
-        $expectedBase64 = "eyJmaXJzdF9uYW1lIjoiSm9lIiwic3VybmFtZSI6IkRvZSIsImVtYWlsIjoiam9lQGRvZS5jb20iLCJzdGFydF9kYXRlIjoiMjEtMDEtMjAyNSIsImVuZF9kYXRlIjoiMjItMDEtMjAyNSIsImRlc2NyaXB0aW9uIjoiQW1hemluZyB2YWNhdGlvbiEiLCJ0b3RhbCI6MTAwMDB9";
+        $expectedBase64 = 'eyJmaXJzdF9uYW1lIjoiSm9lIiwic3VybmFtZSI6IkRvZSIsInN0YXJ0X2RhdGUiOiIyMS0wMS0yMDI1IiwiZW5kX2RhdGUiOiIyMi0wMS0yMDI1In0=';
         $payment = new Payment(100, 'test payment id');
-        $payment->setBookingInfo(['first_name' => 'Joe', 'surname' => 'Doe', 'email' => 'joe@doe.com','start_date' => "21-01-2025", "end_date" => "22-01-2025", 'description' => 'Amazing vacation!', 'total' => 10000]);
-
+        $payment->setBookingInfo([
+            'first_name' => 'Joe',
+            'surname' => 'Doe',
+            'start_date' => '21-01-2025',
+            'end_date' => '22-01-2025',
+        ]);
         self::assertEquals($expectedBase64, $payment->getParams()['booking_info']);
     }
 }
