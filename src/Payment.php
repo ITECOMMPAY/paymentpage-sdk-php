@@ -120,6 +120,7 @@ class Payment
     public function setBestBefore(DateTime $time): Payment
     {
         $this->params['best_before'] = $time->format('c');
+
         return $this;
     }
 
@@ -144,9 +145,15 @@ class Payment
      */
     public function setBookingInfo(array $info): Payment
     {
-        $base64 = base64_encode(json_encode($info));
-        $this->params['booking_info'] = $base64;
-        return $this;
+        $jsonData = json_encode($info);
+        if($jsonData) {
+            $base64 = base64_encode($jsonData);
+            $this->params['booking_info'] = $base64;
+
+            return $this;
+        }
+
+        throw new BadMethodCallException('Invalid data passed');
     }
 
     /**

@@ -72,6 +72,6 @@ class PaymentTest extends \PHPUnit\Framework\TestCase
             'start_date' => '21-01-2025',
             'end_date' => '22-01-2025',
         ]);
-        self::assertEquals($expectedBase64, $payment->getParams()['booking_info']);
+        self::assertEquals($expectedBase64, $payment->getParams()['booking_info'] ?? '');
     }
 }
