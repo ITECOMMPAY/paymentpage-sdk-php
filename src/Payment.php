@@ -150,7 +150,7 @@ class Payment
         if(!count($info)) {
             throw new ProcessException('Empty array passed');
         }
-        if(!json_encode($info)){
+        if(!json_encode($info)) {
             throw new ProcessException('Invalid data passed');
         }
 
