@@ -4,6 +4,7 @@ namespace ecommpay;
 
 use BadMethodCallException;
 use DateTime;
+use ecommpay\exception\ProcessException;
 
 /**
  * Class Payment
@@ -142,18 +143,23 @@ class Payment
      *
      * @param array $info
      * @return $this
+     * @throws ProcessException
      */
     public function setBookingInfo(array $info): Payment
     {
-        $jsonData = json_encode($info);
-        if($jsonData) {
-            $base64 = base64_encode($jsonData);
-            $this->params['booking_info'] = $base64;
-
-            return $this;
+        if(!count($info)) {
+            throw new ProcessException('Empty array passed');
+        }
+        if(!json_encode($info)){
+            throw new ProcessException('Invalid data passed');
         }
 
-        throw new BadMethodCallException('Invalid data passed');
+        $jsonData = json_encode($info);
+        $base64 = base64_encode($jsonData);
+        $this->params['booking_info'] = $base64;
+
+        return $this;
+
     }
 
     /**
