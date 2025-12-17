@@ -2,6 +2,7 @@
 
 namespace ecommpay\tests;
 
+use ecommpay\exception\ProcessException;
 use ecommpay\Payment;
 
 class PaymentTest extends \PHPUnit\Framework\TestCase
@@ -64,7 +65,8 @@ class PaymentTest extends \PHPUnit\Framework\TestCase
 
     public function testBookingInfo()
     {
-        $expectedBase64 = 'eyJmaXJzdF9uYW1lIjoiSm9lIiwic3VybmFtZSI6IkRvZSIsInN0YXJ0X2RhdGUiOiIyMS0wMS0yMDI1IiwiZW5kX2RhdGUiOiIyMi0wMS0yMDI1In0=';
+        $expectedBase64 = 'eyJmaXJzdF9uYW1lIjoiSm9lIiwic3VybmFtZSI6IkRvZSIsInN0YXJ0X2RhdGUiOiIyMS0wMS0yMDI1IiwiZW5kX' .
+            '2RhdGUiOiIyMi0wMS0yMDI1In0=';
         $payment = new Payment(100, 'test payment id');
 
         $payment->setBookingInfo([
@@ -75,5 +77,21 @@ class PaymentTest extends \PHPUnit\Framework\TestCase
         ]);
 
         self::assertEquals($expectedBase64, $payment->getParams()['booking_info'] ?? '');
+    }
+
+    public function testEmptyBookingInfo()
+    {
+        $payment = new Payment(100, 'test payment id');
+
+        $this->expectException(ProcessException::class);
+        $payment->setBookingInfo([]);
+    }
+
+    public function testInvalidBookingInfo()
+    {
+        $payment = new Payment(100, 'test payment id');
+
+        $this->expectException(ProcessException::class);
+        $payment->setBookingInfo(['first_name' => "\xB1\x31"]);
     }
 }
