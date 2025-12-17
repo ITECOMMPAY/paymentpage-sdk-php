@@ -4,6 +4,7 @@ namespace ecommpay;
 
 use BadMethodCallException;
 use DateTime;
+use ecommpay\exception\ProcessException;
 
 /**
  * Class Payment
@@ -120,6 +121,7 @@ class Payment
     public function setBestBefore(DateTime $time): Payment
     {
         $this->params['best_before'] = $time->format('c');
+
         return $this;
     }
 
@@ -132,6 +134,28 @@ class Payment
     public function setCardOperationType(string $type): Payment
     {
         $this->params['operation_type'] = $type;
+
+        return $this;
+    }
+
+    /**
+     * Automatically converts given array into base64 and sets it to booking_info parameter
+     *
+     * @param array $info
+     * @return $this
+     * @throws ProcessException
+     */
+    public function setBookingInfo(array $info): Payment
+    {
+        if (!count($info)) {
+            throw new ProcessException('Empty array passed');
+        }
+        if (!$jsonData = json_encode($info)) {
+            throw new ProcessException('Invalid data passed');
+        }
+
+        $base64 = base64_encode($jsonData);
+        $this->params['booking_info'] = $base64;
 
         return $this;
     }
