@@ -147,10 +147,10 @@ class Payment
      */
     public function setBookingInfo(array $info): Payment
     {
-        if(!count($info)) {
+        if (!count($info)) {
             throw new ProcessException('Empty array passed');
         }
-        if(!$jsonData = json_encode($info)) {
+        if (!$jsonData = json_encode($info)) {
             throw new ProcessException('Invalid data passed');
         }
 
@@ -158,7 +158,6 @@ class Payment
         $this->params['booking_info'] = $base64;
 
         return $this;
-
     }
 
     /**
